@@ -45,7 +45,7 @@ export default function Resident() {
       <img
         style={styles.profile}
         src={userInfo.photo}
-        alt="User Profile Picture"
+        alt="User Profile"
       />
       <br />
       <button style={styles.button} onClick={handleLogout}>
