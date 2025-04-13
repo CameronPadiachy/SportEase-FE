@@ -15,6 +15,11 @@ import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 describe("Login Page", () => {
+
+  afterAll(() => {
+    jest.clearAllTimers();
+  });
+  
   test("Login button displays correctly", () => {
     render(<Login />);
     const loginButton = screen.getByRole("button", { name: /sign in with google/i });
