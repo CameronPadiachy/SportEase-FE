@@ -18,7 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-router-dom)/\"",
-    "coverage": "react-scripts test --coverage --detectOpenHandles --transformIgnorePatterns \"node_modules/(?!react-router-dom)/\" --watchAll=false",
+    "coverage": "react-scripts test --coverage --detectOpenHandles --forceExit --transformIgnorePatterns \"node_modules/(?!react-router-dom)/\" --watchAll=false",
     "upload-coverage": "codecov",
     "eject": "react-scripts eject"
   },

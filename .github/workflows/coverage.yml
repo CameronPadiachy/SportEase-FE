@@ -20,6 +20,8 @@ jobs:
 
       - name: Run tests with coverage
         run: npm run coverage  # Uses your package.json script
+        env:
+          CI: true
 
       - name: Upload to Codecov
         run: npm run upload-coverage
