@@ -1,9 +1,10 @@
 // src/pages/Login.js
-import React, { useState } from "react";
 import { auth, provider, db } from "../firebase/config";
 import { signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,41 +41,63 @@ export default function Login() {
       setStatus("Something went wrong. Check the console.");
     }
   };
+  useEffect(() => {
+    const images = ["slideF.jpeg", "slide2.jpeg", "slide3.jpeg"];
+    let index = 0;
+    const interval = setInterval(() => {
+      const slideshow = document.getElementById("slideshow");
+      if (slideshow) {
+        index = (index + 1) % images.length;
+        slideshow.src = images[index];
+      }
+    }, 3000);
+  
+    return () => clearInterval(interval); // Clean up on unmount
+  }, []);
+  
+ return (
+  <main className="page-wrapper">
+    <header>
+      <h1 className="header-title">SportEase</h1>
+      <p className="header-motto"><br />
+      <br />CTRL ALT COMPLETE</p>
+      <img
+        src="slideF.jpeg"
+        alt="SportEase Banner"
+        className="hero-image"
+        id="slideshow"
+      />
+    </header>
 
-  return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Welcome to SportEase</h1>
-      <button style={styles.button} onClick={handleLogin}>Sign in with Google</button>
-      <p style={styles.status}>{status}</p>
-    </div>
-  );
+    <section className="text-panel">
+      <h2 className="text-heading">Experience it now!</h2>
+      <p>
+        Smart booking, made simple — Reserve your favourite padel, soccer and
+        tennis facilities all in one place.
+        <br />
+        <br />
+        Instant Issue Reporting — Spotted a maintenance issue? Report it in
+        seconds. Stay informed with real-time updates on progress made.
+        <br />
+        <br />
+        Stay connected — Get notified instantly about upcoming events as well as
+        any updates that may matter to you.
+      </p>
+    </section>
+
+    <section className="login-box">
+      <button className="btn-google" onClick={handleLogin}>
+        Sign in with Google
+      </button>
+
+      <p className="status-text">{status}</p>
+
+      <img src="finalLogo.png" alt="SportEase Logo" className="login-logo" />
+    </section>
+    <img src="boy.png" alt="Tennis Boy" className="boy-image" />
+  </main>
+);
+
 }
 
-const styles = {
-  container: {
-    fontFamily: "Arial, sans-serif",
-    backgroundColor: "#f2f2f2",
-    textAlign: "center",
-    paddingTop: "100px",
-    height: "100vh"
-  },
-  heading: {
-    fontSize: "36px",
-    color: "#2c3e50"
-  },
-  button: {
-    backgroundColor: "#4285f4",
-    color: "white",
-    padding: "12px 24px",
-    fontSize: "16px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    transition: "background 0.3s ease"
-  },
-  status: {
-    marginTop: "20px",
-    fontWeight: "bold",
-    color: "#555"
-  }
-};
+
