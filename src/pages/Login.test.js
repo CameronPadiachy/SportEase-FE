@@ -50,6 +50,33 @@ describe("Login Page", () => {
     unmount();
   });
 
+  test("Navigates to resident home page after successful resident login", async () => {
+    const mockNavigate = jest.fn();
+    useNavigate.mockReturnValue(mockNavigate);
+  
+    signInWithPopup.mockResolvedValueOnce({ user: {uid: '9p4pbZKWsrTNeftjdc1j', email: 'john@example.com'} });
+  
+    const { unmount } = render(<Login />);
+    fireEvent.click(screen.getByText(/Sign in with Google/i));
+  
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/resident');
+    });
+    unmount();
+  });
+
+  test("Displays error message when login fails", async () => {
+    signInWithPopup.mockRejectedValueOnce(new Error("Auth failed"));
+  
+    const { unmount } = render(<Login />);
+    fireEvent.click(screen.getByText(/Sign in with Google/i));
+  
+    const errorMessage = await screen.findByText(/Something went wrong. Check the console./i);
+    expect(errorMessage).toBeInTheDocument();
+    unmount();
+  });
+
+
   
 
 
