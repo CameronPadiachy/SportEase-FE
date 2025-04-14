@@ -25,6 +25,16 @@ describe("Login Page", () => {
     unmount();
     
  });
+  test("Login btn triggers firebase popup on btn click", async () =>{
+    const { unmount } = render(<Login />);
+    const button = screen.getByText(/Sign in with Google/i);
+    fireEvent.click(button);
+
+    expect(signInWithPopup).toHaveBeenCalledTimes(1);
+    expect(signInWithPopup).toHaveBeenCalledWith(expect.any(Object), expect.any(Object));
+    unmount();
+  });
+
   
 
 
