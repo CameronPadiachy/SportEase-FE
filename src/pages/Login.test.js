@@ -35,6 +35,21 @@ describe("Login Page", () => {
     unmount();
   });
 
+  test("Navigates to admin home page after successful admin login", async () => {
+    const mockNavigate = jest.fn();
+    useNavigate.mockReturnValue(mockNavigate);
+  
+    signInWithPopup.mockResolvedValueOnce({ user: {uid: 'R4f6QQSZsqYwogw9eceNWW493Ld2', email: '2662024@students.wits.ac.za'} });
+  
+    const { unmount } = render(<Login />);
+    fireEvent.click(screen.getByText(/Sign in with Google/i));
+  
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/admin');
+    });
+    unmount();
+  });
+
   
 
 
