@@ -6,10 +6,9 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.1",
-    "csfm-fe": "file:",
     "firebase": "^11.6.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -18,8 +17,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-router-dom)/\"",
-    "coverage": "react-scripts test --coverage --detectOpenHandles --transformIgnorePatterns \"node_modules/(?!react-router-dom)/\" --watchAll=false",
-    "upload-coverage": "codecov",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,15 +38,8 @@
     ]
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!src/**/*.test.{js,jsx}",
-      "!src/setupTests.js",
-      "!src/reportWebVitals.js"
-    ]
-  },
-  "devDependencies": {
-    "codecov": "^3.8.3",
-    "jest": "^27.5.1"
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/react-router-dom.js"
+    }
   }
 }
