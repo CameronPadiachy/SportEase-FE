@@ -39,7 +39,7 @@ describe("Login Page", () => {
     const mockNavigate = jest.fn();
     useNavigate.mockReturnValue(mockNavigate);
   
-    signInWithPopup.mockResolvedValueOnce({ user: {uid: 'R4f6QQSZsqYwogw9eceNWW493Ld2', email: '2662024@students.wits.ac.za'} });
+    signInWithPopup.mockResolvedValueOnce({ user: {uid: 'R4f6QQSZsqYwogw9eceNWW493Ld2', email: '2662024@students.wits.ac.za', name: 'Cameron Padiachy'} });
   
     const { unmount } = render(<Login />);
     fireEvent.click(screen.getByText(/Sign in with Google/i));
@@ -54,7 +54,7 @@ describe("Login Page", () => {
     const mockNavigate = jest.fn();
     useNavigate.mockReturnValue(mockNavigate);
   
-    signInWithPopup.mockResolvedValueOnce({ user: {uid: '9p4pbZKWsrTNeftjdc1j', email: 'john@example.com'} });
+    signInWithPopup.mockResolvedValueOnce({ user: {uid: '9p4pbZKWsrTNeftjdc1j', email: 'john@example.com', name:'John Doe'} });
   
     const { unmount } = render(<Login />);
     fireEvent.click(screen.getByText(/Sign in with Google/i));
