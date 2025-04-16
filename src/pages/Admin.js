@@ -23,16 +23,27 @@ export default function Admin() {
     signOut(auth).then(() => navigate('/'));
   };
 
+  const goToUserManagement = () => {
+    navigate('/admin/management');
+  };
+
   return (
-    <div style={styles.container}>
+    <main style={styles.container}>
       <h1 style={styles.title}>Admin Dashboard</h1>
       <h2 style={styles.username}>{userInfo.name}</h2>
       <img src={userInfo.photo} alt="Profile" style={styles.profile} />
       <p>You can manage users, events, and facility data.</p>
-      <button onClick={handleLogout} style={styles.button}>
-        Log Out
-      </button>
-    </div>
+
+      <section>
+        <button onClick={goToUserManagement} style={styles.manageButton}>
+          User Management
+        </button>
+        <br />
+        <button onClick={handleLogout} style={styles.button}>
+          Log Out
+        </button>
+      </section>
+    </main>
   );
 }
 
@@ -60,7 +71,7 @@ const styles = {
     border: '2px solid #ccc',
   },
   button: {
-    marginTop: '30px',
+    marginTop: '20px',
     padding: '12px 24px',
     fontSize: '16px',
     backgroundColor: '#1e88e5',
@@ -69,5 +80,15 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
   },
+  manageButton: {
+    marginTop: '30px',
+    marginBottom: '10px',
+    padding: '12px 24px',
+    fontSize: '16px',
+    backgroundColor: '#90caf9',
+    color: 'black',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  },
 };
-
