@@ -43,12 +43,39 @@
     .btn:hover {
       background-color: #e53935;
     }
+
+    .bookpdl, .booktns, .bookscr {
+      margin-top: 30px;
+      padding: 17px 24px;
+      font-size: 16px;
+      background-color: #ff5252;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .bookpdl:hover,
+    .booktns:hover,
+    .bookscr:hover {
+      background-color: #e53935;
+    }
   </style>
 </head>
 <body>
   <h1>Logged in as</h1>
   <h2 id="username">Loading...</h2>
   <img id="profile" src="" alt="User Profile Picture" />
+
+  <!-- Moved the booking buttons up here -->
+  <br><br>
+  <button class="bookpdl" id="padelBtn">Book padel</button>
+  <br><br>
+  <button class="booktns" id="tennisBtn">Book tennis</button>
+  <br><br>
+  <button class="bookscr" id="soccerBtn">Book soccer</button>
+
+  <!-- Log out button stays last -->
   <br><br>
   <button class="btn" id="logoutBtn">Log Out</button>
 
@@ -94,6 +121,18 @@
       signOut(auth).then(() => {
         window.location.href = "index.html";
       });
+    });
+
+    document.getElementById("padelBtn").addEventListener("click", () => {
+      window.location.href = "book_padel.html";
+    });
+
+    document.getElementById("tennisBtn").addEventListener("click", () => {
+      window.location.href = "book_tennis.html";
+    });
+
+    document.getElementById("soccerBtn").addEventListener("click", () => {
+      window.location.href = "book_soccer.html";
     });
   </script>
 </body>
