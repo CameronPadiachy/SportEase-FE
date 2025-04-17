@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #c7c3c3;
+    background-image: none;
+    color: rgba(0, 16, 51, 0.795);
+    text-align: center;
+  }
+  
+.admin-header {
+    background-color: rgba(0, 51, 26, 0.511); 
+    padding: 8px 0; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    gap: 20px;                
+  }
+  
+  
+  .header-icon {
+    width: 200px;
+    height: 100px;
+    margin: 0 35px;
+    vertical-align: middle;
+    object-fit: contain;
+    padding-top: 100px;
+
+  }
+  
+  .admin-container {
+    padding: 40px 0;
+    min-height: 100vh;
+  }
+  
+  .admin-title {
+    font-size: 45px;
+    margin-bottom: 10px;
+    color: rgba(0, 51, 26, 0.511) ;
+  }
+  
+  .admin-username {
+    font-size: 36px;
+    font-weight: normal;
+    opacity: 0.8;
+    margin: 10px 0;
+    color: rgba(0, 51, 26, 0.511);
+  }
+  
+  .admin-subtext {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: rgba(0, 51, 26, 0.511);
+  }
+  
+  .admin-profile {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 999; 
+    cursor: pointer;
+  }
+  
+  .admin-button {
+    margin-top: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color:  rgba(0, 51, 26, 0.511);
+    color: #c7c3c3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .admin-button.manage {
+    margin-top: 20px;
+  }
+  .admin-button.manage:hover{
+    background:  rgba(48, 66, 58, 0.511);
+  }
+
+  .admin-button.logout {
+    margin-top: 10px;
+  }
+
+ .admin-button.logout:hover{
+    background:  rgba(48, 66, 58, 0.511);
+ }
+  

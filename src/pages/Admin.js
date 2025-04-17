@@ -28,65 +28,109 @@ export default function Admin() {
   };
 
   return (
-    <main style={styles.container}>
-      <h1 style={styles.title}>Admin Dashboard</h1>
-      <h2 style={styles.username}>{userInfo.name}</h2>
-      <img src={userInfo.photo} alt="Profile" style={styles.profile} />
-      <p>You can manage users, events, and facility data.</p>
+    <>
+      <header className="admin-header">
+        <img src="soccerball (2).png" alt="Soccer" className="header-icon" />
+        <img src="batt.png" alt="Tennis" className="header-icon" />
+        <img src="rugby.png" alt="Badminton" className="header-icon" />
+      </header>
 
-      <section>
-        <button onClick={goToUserManagement} style={styles.manageButton}>
-          User Management
-        </button>
-        <br />
-        <button onClick={handleLogout} style={styles.button}>
-          Log Out
-        </button>
-      </section>
-    </main>
+      <main className="admin-container">
+        <h1 className="admin-title">Admin Dashboard</h1>
+        <h2 className="admin-username">{userInfo.name}</h2>
+        {userInfo.photo && (
+          <img src={userInfo.photo} alt="Profile" className="admin-profile" />
+        )}
+        <p className="admin-subtext">You can manage users, events, and facility data.</p>
+
+
+        <nav>
+          <button onClick={goToUserManagement} className="admin-button manage">
+            User Management
+          </button>
+          <br />
+          <button onClick={handleLogout} className="admin-button logout">
+            Log Out
+          </button>
+        </nav>
+      </main>
+    </>
   );
 }
 
 const styles = {
+  header: {
+    backgroundColor: 'rgba(255, 244, 91, 0.78)',
+    padding: '20px 0',
+    textAlign: 'center',
+  },
+ 
   container: {
     fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#e3f2fd',
+    backgroundColor:'#c7c3c3',
     textAlign: 'center',
-    paddingTop: '100px',
-    height: '100vh',
+    padding: '40px 0',
+    minHeight: '100vh',
+    color: 'rgba(255, 244, 91, 0.78)',
   },
+
   title: {
-    color: '#1565c0',
     fontSize: '36px',
+    marginBottom: '10px',
   },
+
   username: {
-    fontSize: '24px',
-    marginTop: '10px',
+    fontSize: '22px',
+    fontWeight: 'normal',
+    opacity: 0.8,
+    margin: '10px 0',
+  },
+  subtext: {
+    fontSize: '16px',
+    marginBottom: '30px',
   },
   profile: {
-    marginTop: '20px',
+    marginTop: '10px',
     width: '100px',
     height: '100px',
     borderRadius: '50%',
-    border: '2px solid #ccc',
+    border: '2px solid rgba(0, 16, 51, 0.795)',
+    objectFit: 'cover',
+  },
+  cardLayout: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: '20px',
+    marginBottom: '40px',
+  },
+  card: {
+    backgroundColor: 'rgba(0, 16, 51, 0.795)',
+    color: '#c7c3c3',
+    padding: '30px 20px',
+    borderRadius: '12px',
+    width: '150px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    transition: 'transform 0.2s ease',
   },
   button: {
-    marginTop: '20px',
+    marginTop: '10px',
     padding: '12px 24px',
     fontSize: '16px',
-    backgroundColor: '#1e88e5',
-    color: 'white',
+    backgroundColor: 'rgba(0, 16, 51, 0.795)',
+    color: '#c7c3c3',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
   },
   manageButton: {
-    marginTop: '30px',
-    marginBottom: '10px',
+    marginTop: '20px',
     padding: '12px 24px',
     fontSize: '16px',
-    backgroundColor: '#90caf9',
-    color: 'black',
+    backgroundColor: 'rgba(0, 16, 51, 0.795)',
+    color: '#c7c3c3',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
