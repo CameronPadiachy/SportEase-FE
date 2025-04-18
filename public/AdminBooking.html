@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Booking Table</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main>
+    <table>
+      <caption>Pending Bookings</caption>
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Facility</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="booking-table-body">
+        <!-- Sample row (you’ll replace this dynamically) -->
+        <tr>
+          <td>101</td>
+          <td>Soccer Field A</td>
+          <td>2025-04-18 10:00</td>
+          <td>2025-04-18 11:00</td>
+          <td>pending</td>
+          <td>
+            <button class="accept" onclick="updateBooking(101, 'approved')">Accept</button>
+            <button class="decline" onclick="updateBooking(101, 'blocked')">Decline</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    // This logic will be triggered by any admin using this UI
+    function updateBooking(bookingId, newStatus) {
+      alert(`Booking #${bookingId} marked as ${newStatus}`);
+      // You’d connect this to your backend here
+    }
+  </script>
+</body>
+</html>
