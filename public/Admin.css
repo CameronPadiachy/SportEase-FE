@@ -1,10 +1,10 @@
-body {
+body{
     font-family: Arial, sans-serif;
     background: #f9f9f9;
     padding: 2rem;
   }
   
-  main {
+  main{
     max-width: 900px;
     margin: auto;
   }
@@ -23,9 +23,9 @@ body {
   }
   
   th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd ;
     padding: 0.75rem;
-    text-align: center;
+    text-align: center ;
   }
   
   th {
@@ -33,7 +33,7 @@ body {
   }
   
   button {
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 1rem ;
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -41,12 +41,17 @@ body {
   }
   
   .accept {
-    background-color: #4CAF50;
+    background-color: #3c5f8e;
     color: white;
   }
   
   .decline {
-    background-color: #f44336;
-    color: white;
+    background-color: #cce5ff;
+    color: black;
+  }
+  
+  .edit {
+    background-color: #ffc107;
+    color: black;
   }
   
