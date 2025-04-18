@@ -22,35 +22,27 @@
         </tr>
       </thead>
       <tbody id="booking-table-body">
-     
-        <tr>
-          <td>101</td>
-          <td>Soccer Field A</td>
-          <td>2025-04-18 10:00</td>
-          <td>2025-04-18 11:00</td>
-          <td>pending</td>
-          <td id="action-101">
-            <button class="accept" onclick="updateBooking(101, 'approved')">Accept</button>
-            <button class="decline" onclick="updateBooking(101, 'blocked')">Decline</button>
-          </td>
-        </tr>
+        <!-- Rows will be filled by API -->
       </tbody>
     </table>
   </main>
 
   <script>
-    /*
-    fetch('https://your-backend-api.com/bookings')
+    const API_URL = 'http://localhost:5000/api/booking';
+
+    fetch(API_URL)
       .then(response => response.json())
       .then(bookings => {
         const tbody = document.getElementById('booking-table-body');
+        tbody.innerHTML = '';
+
         bookings.forEach(booking => {
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${booking.booking_id}</td>
-            <td>${booking.facility}</td>
-            <td>${booking.start_time}</td>
-            <td>${booking.end_time}</td>
+            <td>Facility ${booking.facility_id}</td>
+            <td>${booking.start_time.split('T')[0]}</td>
+            <td>${booking.end_time.split('T')[0]}</td>
             <td>${booking.status}</td>
             <td id="action-${booking.booking_id}">
               <button class="accept" onclick="updateBooking(${booking.booking_id}, 'approved')">Accept</button>
@@ -63,7 +55,6 @@
       .catch(error => {
         console.error('Error loading bookings:', error);
       });
-    */
 
     function updateBooking(bookingId, newStatus) {
       const actionCell = document.getElementById(`action-${bookingId}`);
