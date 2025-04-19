@@ -28,7 +28,7 @@
   </main>
 
   <script>
-    const API_URL = 'http://localhost:5000/api/booking';
+    const API_URL = 'https://csmf-ayf7egbaedhug4g6.southafricanorth-01.azurewebsites.net/api/booking';
 
     fetch(API_URL)
       .then(response => response.json())
@@ -43,7 +43,7 @@
             <td>Facility ${booking.facility_id}</td>
             <td>${booking.start_time.split('T')[0]}</td>
             <td>${booking.end_time.split('T')[0]}</td>
-            <td>${booking.status}</td>
+            <td id="status-${booking.booking_id}">${booking.status}</td>
             <td id="action-${booking.booking_id}">
               <button class="accept" onclick="updateBooking(${booking.booking_id}, 'approved')">Accept</button>
               <button class="decline" onclick="updateBooking(${booking.booking_id}, 'blocked')">Decline</button>
@@ -57,11 +57,27 @@
       });
 
     function updateBooking(bookingId, newStatus) {
-      const actionCell = document.getElementById(`action-${bookingId}`);
-      actionCell.innerHTML = `
-        <button onclick="editBooking(${bookingId})" class="edit">Edit</button>
-      `;
-      alert(`Booking #${bookingId} marked as ${newStatus}`);
+      fetch(`${API_URL}/${bookingId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to update booking');
+        return res.json();
+      })
+      .then(updated => {
+        document.getElementById(`status-${bookingId}`).innerText = updated.status;
+        const actionCell = document.getElementById(`action-${bookingId}`);
+        actionCell.innerHTML = `
+          <button onclick="editBooking(${bookingId})" class="edit">Edit</button>
+        `;
+        alert(`Booking #${updated.booking_id} updated to ${updated.status}`);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Something went wrong updating the booking');
+      });
     }
 
     function editBooking(bookingId) {
