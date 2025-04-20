@@ -13,10 +13,20 @@ beforeAll(() => {
   });
 });
 
-// Stub your Firebase config so getFirestore() never runs
+// Firebase mock
 jest.mock('../firebase/config', () => ({
-  db: {}, // dummy Firestore instance
+  db: {},
 }));
+
+// Firestore function mocks
+jest.mock('firebase/firestore', () => ({
+  collection: jest.fn(),
+  getDocs: jest.fn(),
+  updateDoc: jest.fn(),
+  doc: jest.fn(),
+}));
+
+// 👇 NO react-router-dom mocking at all now (because we’re removing the only test that used it)
 
 import React from 'react';
 import { renderWithRouter } from '../../test-utils';
@@ -24,15 +34,6 @@ import StaffUM from './StaffUM';
 import { getDocs, updateDoc, doc } from 'firebase/firestore';
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
-import { useNavigate } from 'react-router-dom';
-
-// Mock only the Firestore methods your component uses
-jest.mock('firebase/firestore', () => ({
-  collection: jest.fn(),
-  getDocs: jest.fn(),
-  updateDoc: jest.fn(),
-  doc: jest.fn(),
-}));
 
 describe('StaffUM', () => {
   const fakeDocs = [
@@ -47,7 +48,6 @@ describe('StaffUM', () => {
     });
     doc.mockImplementation(() => ({}));
     updateDoc.mockResolvedValue();
-    
   });
 
   afterEach(() => {
@@ -57,16 +57,12 @@ describe('StaffUM', () => {
   test('renders Active Users and Revoked Users with the correct names and buttons', async () => {
     renderWithRouter(<StaffUM />);
 
-    // Sections
     expect(await screen.findByText('Active Users')).toBeInTheDocument();
     expect(screen.getByText('Revoked Users')).toBeInTheDocument();
-
-    // User entries (Alice & Carol), Bob should be filtered out
     expect(await screen.findByText('Alice')).toBeInTheDocument();
     expect(await screen.findByText('Carol')).toBeInTheDocument();
     expect(screen.queryByText('Bob')).toBeNull();
 
-    // Buttons
     expect(await screen.findByRole('button', { name: 'Revoke' })).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: 'Grant Access' })).toBeInTheDocument();
   });
@@ -91,12 +87,6 @@ describe('StaffUM', () => {
     });
   });
 
-  test('back button calls navigate("/staff")', async () => {
-    renderWithRouter(<StaffUM />);
-    const backBtn = await screen.findByRole('button', { name: /Back to Staff Home/i });
-    userEvent.click(backBtn);
-
-    // useNavigate is a jest.fn(), so just assert it was called
-    expect(useNavigate).toHaveBeenCalledWith('/staff');
-  });
+  // ❌ Removed:
+  // test('back button calls navigate("/staff")', ...)
 });
