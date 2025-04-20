@@ -1,146 +1,175 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
 
 body {
-    background-color: #c7c3c3;
-    margin: 0;
-    padding: 50px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: relative;
+  background-color: #c7c3c3;
+  margin: 0;
+  padding: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
 }
 
 .heading {
-    text-align: center;
-    font-size: 3rem;
-    color: #ffff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    margin-top: -20px;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    background: linear-gradient(to right, #ffff, #ffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.form-background {
-    background-color: rgba(0, 16, 51, 0.795); /* semi-transparent grey */
-    padding: 30px;
-    border-radius: 20px;
-    width: fit-content;
-    margin-left: 50px;
-    box-shadow: 0 8px 24px #011540;
+  text-align: center;
+  font-size: 3rem;
+  color: #ffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  margin-top: -20px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  background: linear-gradient(to right, #ffff, #ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .form {
-    width: 650px;
-    margin-left: -20px; /* Pushes form toward the left */
-    margin-top: 10px;
-    display: inline-block; /* allow it to stay on the left side */
-    vertical-align: top;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
 }
 
-.form-text {
-    text-align: center;
-    margin: 0 0 40px 0;
+.form-background {
+  background-color: rgba(0, 16, 51, 0.795);
+  padding: 40px;
+  border-radius: 20px;
+  width: 500px; /* ✅ fixed size */
+  box-shadow: 0 8px 24px #011540;
+  box-sizing: border-box;
 }
 
-.form-text h1 img {
-    margin: 0 10px;
+form fieldset {
+  border: none;
+  margin-bottom: 20px;
+  text-align: left;
+  width: 100%;
 }
 
-.form-text h1 {
-    color: #fff;
-    font-family: 'Akaya Telivigala', cursive;
-    font-size: 40px;
-    margin-bottom: 20px;
+form label {
+  font-weight: bold;
+  color: #fff;
+  display: block;
+  margin-bottom: 8px;
+  font-family: 'Akaya Telivigala', cursive;
+  font-size: 18px;
 }
 
-.form-text p {
-    color: #fff;
-    font-family: 'Akaya Telivigala', cursive;
-    font-size: large;
+form input[type="date"],
+form input[type="text"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.main-form fieldset {
-    margin: 10px;
-    width: 300px;
-    display: inline-block;
-    border: none;
+.button {
+  background-color: #ffffff8a; 
+  color: #000; 
+  font-family: 'Akaya Telivigala', cursive;
+  border: none;
+  padding: 12px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px; 
+  transition: all 0.3s ease; 
+  width: 100%;
 }
 
-.main-form fieldset label {
-    display: block;
-    width: 100%;
-    font-family: 'Akaya Telivigala', cursive;
-    color: #fff;
-    font-size: 20px;
-    margin-bottom: 5px;
+.button:hover {
+  background-color: #ffffff; 
+  color: black;
 }
 
-.main-form fieldset input,
-.main-form fieldset select {
-    width: 100%;
-    font-family: 'Akaya Telivigala', cursive;
-    background: none;
-    border: 1px solid #ffffff;
-    font-size: 20px;
-    color: #000000;
-    outline: none;
-    padding: 3px 0 3px 10px;
-    margin-top: 5px;
+/* Time Slot Section */
+.time-options {
+  display: none;
+  margin-top: 10px;
 }
 
+fieldset.time-slot-fieldset {
+  border: none;
+  padding: 0;
+  margin: 10px 0;
+}
 
+button.time-option {
+  padding: 10px 15px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.3s;
+}
 
+button.time-option:hover {
+  background-color: #a5b7c0;
+  color: #fff;
+}
+
+button.time-option.selected {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Image Layout */
 .image-section {
-    position: absolute;
-    top: 175px;
-    right: 250px;
+  position: absolute;
+  top: 175px;
+  right: 250px;
 }
 
 .image1,
 .image2 {
-    width: 250px;
-    height: 250px;
-    border-radius: 30px;
-    object-fit: cover;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  width: 250px;
+  height: 250px;
+  border-radius: 30px;
+  object-fit: cover;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
 .image1 {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .image2 {
-    position: absolute;
-    top: 120px;
-    left: 160px;
-    z-index: 2;
+  position: absolute;
+  top: 120px;
+  left: 160px;
+  z-index: 2;
 }
 
-.button {
-    background-color: #ffffff8a; 
-    color: #000; 
-    font-family: 'Akaya Telivigala', cursive;
-    border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 5px; 
-    transition: all 0.3s ease; 
-    
-}   
-
-.button:hover {
-    background-color: #ffffff; 
-    color: black;
-}
-
-
+/* Responsive */
 @media screen and (max-width: 710px) {
-    .main-form {
-        text-align: center;
-    }
+  .form-background {
+    width: 90%;
+    margin: 0 auto;
+  }
 
+  .form {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .image-section {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  .image1,
+  .image2 {
+    position: static;
+    width: 90%;
+    max-width: 300px;
+    margin: 10px 0;
+  }
 }
