@@ -29,11 +29,11 @@ export default function Admin() {
 
   return (
     <>
-      <header className="admin-header">
+      {/*<header className="admin-header">
         <img src="soccerball (2).png" alt="Soccer" className="header-icon" />
         <img src="batt.png" alt="Tennis" className="header-icon" />
         <img src="rugby.png" alt="Badminton" className="header-icon" />
-      </header>
+      </header>*/}
 
       <main className="admin-container">
         <h1 className="admin-title">Admin Dashboard</h1>

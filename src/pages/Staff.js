@@ -27,24 +27,39 @@ export default function Staff() {
     navigate('/staff/management');
   };
 
-  return (
-    <main style={styles.container}>
-      <h1 style={styles.title}>Staff Dashboard</h1>
-      <h2 style={styles.username}>{userInfo.name}</h2>
-      <img src={userInfo.photo} alt="Profile" style={styles.profile} />
-      <p>You can view and update maintenance reports here.</p>
+ return (
+  <>
+    {/*<header className="staff-header">
+      <img src="soccerball (2).png" alt="Soccer" className="header-icon" />
+      <img src="batt.png" alt="Tennis" className="header-icon" />
+      <img src="rugby.png" alt="Badminton" className="header-icon" />
+    </header>*/}
+    <main className="staff-page">
+      <h1 className="staff-title">Staff Dashboard</h1>
+      <h2 className="staff-username">{userInfo.name}</h2>
 
-      <section>
-        <button onClick={goToUserManagement} style={styles.manageButton}>
+      {userInfo.photo && (
+        <img src={userInfo.photo} alt="Profile" className="staff-profile" />
+      )}
+
+      <p className="staff-subtext">
+        You can view and update maintenance reports here.
+      </p>
+
+      <nav>
+        <button onClick={goToUserManagement} className="staff-button manage">
           User Management
         </button>
         <br />
-        <button onClick={handleLogout} style={styles.button}>
+        <button onClick={handleLogout} className="staff-button logout">
           Log Out
         </button>
-      </section>
+      </nav>
     </main>
-  );
+  </>
+);
+
+  
 }
 
 const styles = {
