@@ -1,9 +1,18 @@
-// __mocks__/react-router-dom.js
-export const useNavigate = jest.fn();
-export const useLocation = jest.fn(() => ({}));
-export const Link = ({ children }) => <div>{children}</div>;
-export const Navigate = ({ children }) => <div>{children}</div>;
-export const Outlet = () => <div />;
-export const useParams = jest.fn(() => ({}));
+// src/__mocks__/react-router-dom.js
+import React from 'react';
 
-// Add other router components you use
+// A single mock navigate function we can inspect in tests
+export const mockNavigate = jest.fn();
+
+// useNavigate returns our mockNavigate
+export const useNavigate = () => mockNavigate;
+
+// Stub for MemoryRouter so <MemoryRouter>{ui}</MemoryRouter> renders children
+export const MemoryRouter = ({ children }) => <>{children}</>;
+
+// Other router hooks/components
+export const useLocation = jest.fn(() => ({}));
+export const Link = ({ children }) => <>{children}</>;
+export const Navigate = ({ children }) => <>{children}</>;
+export const Outlet = () => <></>;
+export const useParams = jest.fn(() => ({}));
