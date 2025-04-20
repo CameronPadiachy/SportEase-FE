@@ -1,0 +1,57 @@
+body{
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    padding: 2rem;
+  }
+  
+  main{
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  
+  caption {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  th, td {
+    border: 1px solid #ddd ;
+    padding: 0.75rem;
+    text-align: center ;
+  }
+  
+  th {
+    background-color: #eee;
+  }
+  
+  button {
+    padding: 0.4rem 1rem ;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .accept {
+    background-color: #3c5f8e;
+    color: white;
+  }
+  
+  .decline {
+    background-color: #cce5ff;
+    color: black;
+  }
+  
+  .edit {
+    background-color: #ffc107;
+    color: black;
+  }
+  
