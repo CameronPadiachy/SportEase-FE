@@ -47,7 +47,7 @@ describe('StaffUM', () => {
     });
     doc.mockImplementation(() => ({}));
     updateDoc.mockResolvedValue();
-    useNavigate.mockClear();
+    
   });
 
   afterEach(() => {
