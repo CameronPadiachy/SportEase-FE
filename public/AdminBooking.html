@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <title>Pending Bookings</title>
   <link rel="stylesheet" href="admin.css">
-
-
 </head>
 
 <body>
+  <!-- ✅ Back Button -->
+  <button onclick="goBack()" style="margin: 20px; padding: 10px 20px; background-color: #90caf9; border: none; border-radius: 5px; cursor: pointer;">
+    ← Back
+  </button>
+
   <h1 style="text-align: center;">Manage Booking Requests</h1>
 
   <main>
     <table>
-
       <caption>Pending Bookings</caption>
       <thead>
         <tr>
@@ -26,14 +28,13 @@
         </tr>
       </thead>
       <tbody id="booking-table-body">
-      
+        <!-- Table will be populated by API -->
       </tbody>
-
     </table>
   </main>
 
   <script>
-    const API_URL= 'https://csmf-ayf7egbaedhug4g6.southafricanorth-01.azurewebsites.net/api/booking';
+    const API_URL = 'https://csmf-ayf7egbaedhug4g6.southafricanorth-01.azurewebsites.net/api/booking';
 
     fetch(API_URL)
       .then(response => response.json())
@@ -41,8 +42,8 @@
         const tbody = document.getElementById('booking-table-body');
         tbody.innerHTML = '';
 
-        bookings.forEach(booking=> {
-          const row= document.createElement('tr');
+        bookings.forEach(booking => {
+          const row = document.createElement('tr');
           row.innerHTML = `
             <td>${booking.booking_id}</td>
             <td>Facility ${booking.facility_id}</td>
@@ -50,7 +51,6 @@
             <td>${booking.end_time.split('T')[0]}</td>
             <td id="status-${booking.booking_id}">${booking.status}</td>
             <td id="action-${booking.booking_id}">
-              
               <button class="accept" onclick="updateBooking(${booking.booking_id}, 'approved')">Accept</button>
               <button class="decline" onclick="updateBooking(${booking.booking_id}, 'blocked')">Decline</button>
             </td>
@@ -74,28 +74,30 @@
       })
       .then(updated => {
         document.getElementById(`status-${bookingId}`).innerText = updated.status;
-        const actionCell = document.getElementById(`action-${bookingId}`) ;
+        const actionCell = document.getElementById(`action-${bookingId}`);
         actionCell.innerHTML = `
           <button onclick="editBooking(${bookingId})" class="edit">Edit</button>
         `;
-        alert(`Booking #${updated.booking_id} updated to ${updated.status}`) ;
+        alert(`Booking #${updated.booking_id} updated to ${updated.status}`);
       })
       .catch(err => {
         console.error(err);
-        alert('Something went wrong updating the booking') ;
+        alert('Something went wrong updating the booking');
       });
     }
 
     function editBooking(bookingId) {
-
-      const actionCell= document.getElementById(`action-${bookingId}`);
-      actionCell.innerHTML= `
+      const actionCell = document.getElementById(`action-${bookingId}`);
+      actionCell.innerHTML = `
         <button class="accept" onclick="updateBooking(${bookingId}, 'approved')">Accept</button>
         <button class="decline" onclick="updateBooking(${bookingId}, 'blocked')">Decline</button>
       `;
     }
+
+    // ✅ Back button function
+    function goBack() {
+      window.location.href = '/admin';
+    }
   </script>
-
 </body>
-
 </html>
