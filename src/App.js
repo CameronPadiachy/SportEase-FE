@@ -7,7 +7,7 @@ import Resident from "./pages/Resident";
 import StaffUM from "./pages/StaffUM";
 import AdminUM from "./pages/AdminUM";
 import AdminDash from './pages/AdminDash';
-
+import BookingForm from "./pages/BookingForm"; // ✅ add this at the top
 
 
 function App() {
@@ -19,6 +19,9 @@ function App() {
       <Route path="/staff" element={<Staff />} />
       <Route path="/resident" element={<Resident />} />
       <Route path="/staff/management" element={<StaffUM />} />
+      <Route path="/booking" element={<BookingForm />} />
+
+
 
 
 

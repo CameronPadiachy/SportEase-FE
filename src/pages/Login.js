@@ -54,6 +54,14 @@ export default function Login() {
   };
 
   useEffect(() => {
+    // Add login-page class to <body> for scoped styles
+    document.body.classList.add("login-page");
+    return () => {
+      document.body.classList.remove("login-page");
+    };
+  }, []);
+
+  useEffect(() => {
     const images = ["slideF.jpeg", "slide2.jpeg", "slide3.jpeg"];
     let index = 0;
     const interval = setInterval(() => {
@@ -103,5 +111,3 @@ export default function Login() {
     </main>
   );
 }
-
-

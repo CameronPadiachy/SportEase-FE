@@ -10,13 +10,8 @@ export default function Resident() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.body.style = '';
-    document.documentElement.style = '';
-    document.body.style.backgroundColor = '#c7c3c3';
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
-    document.body.style.minHeight = '100vh';
-    document.body.style.overflow = 'hidden';
+    // ✅ Scoped CSS via class on <body>
+    document.body.classList.add('resident-page');
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -40,18 +35,11 @@ export default function Resident() {
       }
     });
 
+    // Animated tennis ball
     const ball = document.createElement('img');
     ball.src = '/tennisball.png.png';
     ball.alt = 'Tennis Ball';
-    Object.assign(ball.style, {
-      width: '50px',
-      height: '50px',
-      position: 'absolute',
-      top: '100px',
-      left: '100px',
-      zIndex: 5,
-      pointerEvents: 'none',
-    });
+    ball.className = 'resident-ball';
     document.body.appendChild(ball);
 
     let x = 100, y = 100;
@@ -61,22 +49,19 @@ export default function Resident() {
     const animate = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-
       x += dx;
       y += dy;
-
       if (x <= 0 || x + 50 >= w) dx *= -1;
       if (y <= 0 || y + 50 >= h) dy *= -1;
-
       ball.style.left = x + 'px';
       ball.style.top = y + 'px';
-
       requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
+      document.body.classList.remove('resident-page');
       document.body.removeChild(ball);
       unsubscribe();
     };
@@ -86,125 +71,42 @@ export default function Resident() {
     signOut(auth).then(() => navigate('/'));
   };
 
-  const goToPadel = () => window.location.href = 'padel.html';
-  const goToTennis = () => window.location.href = 'tennis.html';
-  const goToSoccer = () => window.location.href = 'soccer.html';
-
-  const getButtonStyle = (key) => ({
-    marginTop: '10px',
-    padding: '12px 24px',
-    fontSize: '16px',
-    backgroundColor: hovered[key] ? 'green' : 'rgba(0, 16, 51, 0.795)',
-    color: '#c7c3c3',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    transition: 'background-color 0.2s ease',
-  });
-
-  const imageStyle = {
-    width: '100px',
-    height: '100px',
-    objectFit: 'cover',
-  };
-
-  const columnStyle = {
-    display: 'inline-block',
-    margin: '0 20px',
-    textAlign: 'center',
+  const goToFacility = (facilityId) => {
+    localStorage.setItem('selectedFacility', facilityId);
+    navigate('/booking');
   };
 
   return (
-    <main style={styles.container}>
-      <h1 style={styles.title}>Logged in as</h1>
-      <h2 style={styles.username}>{userInfo.name}</h2>
+    <main className="resident-container">
+  <img className="resident-profile" src={userInfo.photo} alt="User Profile" />
 
-      <img style={styles.profile} src={userInfo.photo} alt="User Profile" />
+  <h1 className="resident-title">Logged in as</h1>
+  <h2 className="resident-username">{userInfo.name}</h2>
 
-      <br />
-      <button
-        style={getButtonStyle('logout')}
-        onClick={handleLogout}
-        onMouseEnter={() => setHovered({ ...hovered, logout: true })}
-        onMouseLeave={() => setHovered({ ...hovered, logout: false })}
-      >
-        Log Out
-      </button>
+  <button
+    className={`resident-button logout ${hovered.logout ? 'hover' : ''}`}
+    onClick={handleLogout}
+    onMouseEnter={() => setHovered({ ...hovered, logout: true })}
+    onMouseLeave={() => setHovered({ ...hovered, logout: false })}
+  >
+    Log Out
+  </button>
 
-      <br /><br /><br />
+  <div className="resident-booking-section">
+    <div className="resident-column">
+      <img className="resident-image" src="/padel.jpeg" alt="Padel" />
+      <button className="resident-button" onClick={() => goToFacility(2)}>Book padel</button>
+    </div>
+    <div className="resident-column">
+      <img className="resident-image" src="/tennis.jpeg" alt="Tennis" />
+      <button className="resident-button" onClick={() => goToFacility(1)}>Book tennis</button>
+    </div>
+    <div className="resident-column">
+      <img className="resident-image" src="/soccer.jpeg" alt="Soccer" />
+      <button className="resident-button" onClick={() => goToFacility(3)}>Book soccer</button>
+    </div>
+  </div>
+</main>
 
-      <>
-        <div style={columnStyle}>
-          <img style={imageStyle} src="/padel.jpeg" alt="Padel" />
-          <br />
-          <button
-            style={getButtonStyle('padel')}
-            onClick={goToPadel}
-            onMouseEnter={() => setHovered({ ...hovered, padel: true })}
-            onMouseLeave={() => setHovered({ ...hovered, padel: false })}
-          >
-            Book padel
-          </button>
-        </div>
-
-        <div style={columnStyle}>
-          <img style={imageStyle} src="/tennis.jpeg" alt="Tennis" />
-          <br />
-          <button
-            style={getButtonStyle('tennis')}
-            onClick={goToTennis}
-            onMouseEnter={() => setHovered({ ...hovered, tennis: true })}
-            onMouseLeave={() => setHovered({ ...hovered, tennis: false })}
-          >
-            Book tennis
-          </button>
-        </div>
-
-        <div style={columnStyle}>
-          <img style={imageStyle} src="/soccer.jpeg" alt="Soccer" />
-          <br />
-          <button
-            style={getButtonStyle('soccer')}
-            onClick={goToSoccer}
-            onMouseEnter={() => setHovered({ ...hovered, soccer: true })}
-            onMouseLeave={() => setHovered({ ...hovered, soccer: false })}
-          >
-            Book soccer
-          </button>
-        </div>
-      </>
-    </main>
   );
 }
-
-const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#c7c3c3',
-    color: 'rgba(0, 16, 51, 0.795)',
-    textAlign: 'center',
-    paddingTop: '100px',
-    paddingBottom: '100px',
-    minHeight: '100vh',
-    boxSizing: 'border-box',
-    position: 'relative',
-  },
-  title: {
-    color: 'rgba(0, 16, 51, 0.795)',
-    fontSize: '36px',
-    marginBottom: '10px',
-  },
-  username: {
-    fontSize: '24px',
-    marginTop: '10px',
-    color: 'rgba(0, 16, 51, 0.795)',
-  },
-  profile: {
-    marginTop: '20px',
-    marginBottom: '10px',
-    width: '100px',
-    height: '100px',
-    borderRadius: '50%',
-    border: '2px solid rgba(0, 16, 51, 0.795)',
-  },
-};
