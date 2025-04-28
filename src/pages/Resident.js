@@ -106,6 +106,15 @@ export default function Resident() {
       <button className="resident-button" onClick={() => goToFacility(3)}>Book soccer</button>
     </div>
   </div>
+
+  <section style={{ marginTop: '30px', textAlign: 'center' }}>
+    <button
+      className="resident-button"
+      onClick={() => navigate('/resident-reports')}
+    >
+      Report a Maintenance Issue
+    </button>
+  </section>
 </main>
 
   );

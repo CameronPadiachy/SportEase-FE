@@ -34,15 +34,12 @@ export default function Staff() {
     navigate('/staff/management');
   };
 
+  const goToStaffReports = () => {
+    navigate('/staff-reports'); // ✅ new navigation
+  };
+
   return (
     <>
-      {/* Optional Header (commented out by you) */}
-      {/* <header className="staff-header">
-        <img src="soccerball (2).png" alt="Soccer" className="header-icon" />
-        <img src="batt.png" alt="Tennis" className="header-icon" />
-        <img src="rugby.png" alt="Badminton" className="header-icon" />
-      </header> */}
-
       <main className="staff-page">
         <h1 className="staff-title">Staff Dashboard</h1>
         <h2 className="staff-username">{userInfo.name}</h2>
@@ -56,10 +53,17 @@ export default function Staff() {
         </p>
 
         <nav>
+          {/* ✅ New button */}
+          <button onClick={goToStaffReports} className="staff-button manage">
+            Manage Maintenance Reports
+          </button>
+          <br />
+
           <button onClick={goToUserManagement} className="staff-button manage">
             User Management
           </button>
           <br />
+
           <button onClick={handleLogout} className="staff-button logout">
             Log Out
           </button>
