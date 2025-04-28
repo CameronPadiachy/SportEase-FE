@@ -9,15 +9,16 @@ export default function ResidentReports() {
   const [message, setMessage] = useState("");
 
   // Fetch all reports from Firestore
+  async function fetchReports() {
+    const querySnapshot = await getDocs(collection(db, "maintenance_reports"));
+    const reportsList = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    setReports(reportsList);
+  }
+
   useEffect(() => {
-    async function fetchReports() {
-      const querySnapshot = await getDocs(collection(db, "maintenance_reports"));
-      const reportsList = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setReports(reportsList);
-    }
     fetchReports();
   }, []);
 
@@ -35,7 +36,7 @@ export default function ResidentReports() {
       setShowForm(false);
       setName("");
       setMessage("");
-      window.location.reload(); // reload to show updated list
+      fetchReports(); // ✅ fetch updated reports instead of reloading the page
     } catch (error) {
       console.error("Error adding report: ", error);
       alert("Failed to submit report.");
@@ -60,7 +61,7 @@ export default function ResidentReports() {
 
       {showForm && (
         <form onSubmit={handleAddReport} style={{ marginBottom: "20px" }}>
-          <div>
+          <section>
             <label>Your Name:</label>
             <br />
             <input
@@ -70,9 +71,9 @@ export default function ResidentReports() {
               onChange={(e) => setName(e.target.value)}
               style={{ width: "300px", padding: "8px", marginBottom: "10px" }}
             />
-          </div>
+          </section>
 
-          <div>
+          <section>
             <label>Describe the Issue:</label>
             <br />
             <textarea
@@ -81,7 +82,7 @@ export default function ResidentReports() {
               onChange={(e) => setMessage(e.target.value)}
               style={{ width: "300px", height: "100px", padding: "8px" }}
             />
-          </div>
+          </section>
 
           <br />
           <button type="submit">Submit Report</button>
