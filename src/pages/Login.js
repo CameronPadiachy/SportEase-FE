@@ -9,6 +9,27 @@ export default function Login() {
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
 
+  const addUserToSQL = async (uid) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/users/', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uid })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add user to SQL database');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('SQL user creation error:', error);
+      // Continue even if SQL fails (Firebase is primary)
+    }
+  };
+
   const handleLogin = async () => {
     setStatus("");
     try {
@@ -30,6 +51,10 @@ export default function Login() {
           access,
           createdAt: serverTimestamp(),
         });
+
+        // Add user to SQL database
+        await addUserToSQL(user.uid);
+
       } else {
         // Existing user — get their role and access
         const data = docSnap.data();
@@ -46,6 +71,8 @@ export default function Login() {
       if (role === "admin") navigate("/admin");
       else if (role === "staff") navigate("/staff");
       else navigate("/resident");
+
+
 
     } catch (error) {
       console.error("Login error:", error);
