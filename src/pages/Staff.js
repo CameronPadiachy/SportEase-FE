@@ -35,39 +35,49 @@ export default function Staff() {
   };
 
   const goToStaffReports = () => {
-    navigate('/staff-reports'); // ✅ new navigation
+    navigate('/staff-reports');
   };
 
   return (
     <>
-      <main className="staff-page">
+    <main className="staff-container">
+      <header className="staff-header">
+        <img
+          src={userInfo.photo}
+          alt="Profile"
+          className="staff-profile"
+        />
         <h1 className="staff-title">Staff Dashboard</h1>
         <h2 className="staff-username">{userInfo.name}</h2>
+        <p className="staff-subtitle">You can view and update maintenance reports here.</p>
+      </header>
 
-        {userInfo.photo && (
-          <img src={userInfo.photo} alt="Profile" className="staff-profile" />
-        )}
 
-        <p className="staff-subtext">
-          You can view and update maintenance reports here.
-        </p>
+        <section className="staff-cards">
+          <article className="staff-card">
+            <button onClick={goToUserManagement} className="staff-card-title">
+              User Management
+            </button>
+            <p className="staff-card-description">
+              View and manage registered users, roles, and access rights.
+            </p>
+          </article>
 
-        <nav>
-          {/* ✅ New button */}
-          <button onClick={goToStaffReports} className="staff-button manage">
-            Manage Maintenance Reports
-          </button>
-          <br />
+          <article className="staff-card">
+            <button onClick={goToStaffReports} className="staff-card-title">
+              Manage Maintenance Reports
+            </button>
+            <p className="staff-card-description">
+              View and manage reports. Make updates and check progresses.
+            </p>
+          </article>
+        </section>
 
-          <button onClick={goToUserManagement} className="staff-button manage">
-            User Management
-          </button>
-          <br />
+        <button onClick={handleLogout} className="staff-logout">
+          Log Out
+        </button>
 
-          <button onClick={handleLogout} className="staff-button logout">
-            Log Out
-          </button>
-        </nav>
+
       </main>
     </>
   );

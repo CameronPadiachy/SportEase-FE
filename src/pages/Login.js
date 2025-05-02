@@ -106,8 +106,7 @@ export default function Login() {
         <p className="status-text">{status}</p>
         <img src="finalLogo.png" alt="SportEase Logo" className="login-logo" />
       </section>
-
-      <img src="boy.png" alt="Tennis Boy" className="boy-image" />
+      
     </main>
   );
 }

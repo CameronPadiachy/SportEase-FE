@@ -1,41 +1,41 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
 
-.staff-page {
+* {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+html,
+body {
   overflow-x: hidden;
-  overflow-y: auto;
-
 }
 
-.staff-page .stadium-banner {
-  width: 100%;
-  max-height: 60vh;
-  object-fit: cover;
-  display: block;
-  z-index: 0;
-  margin-bottom: -5px;
-}
-
-.staff-page .staff-page {
-  height: 100vh;
-  min-height: 100vh;
-  padding: 60px 20px;
-  text-align: center;
-  color: white;
-
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('/stdium.png');
+.staff-page .staff-container {
+  font-family: Arial, sans-serif;
+  background-image: url("stdium.png");
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  background-attachment: fixed;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding-top: 0; 
   position: relative;
-  z-index: 1;
+  overflow-x: hidden;
+}
+
+/* Full-width green header */
+.staff-page header.staff-header {
+  background-color: rgba(60, 25, 55, 0.9);
+  width: 100%;
+  padding: 40px 20px 60px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .staff-page .staff-title {
@@ -51,75 +51,141 @@
   text-shadow: 1px 1px 3px black;
 }
 
-.staff-page .staff-subtext {
+.staff-page .staff-subtitle {
   font-size: 20px;
-  margin-bottom: 30px;
+  margin-top: 10px;
   text-shadow: 1px 1px 3px black;
 }
 
+/* Profile image stays top-right */
 .staff-page .staff-profile {
-  position: fixed;
-  top: 10px;
-  right: 15px;
+  position: absolute;
+  top: 20px;
+  right: 40px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  z-index: 999;
-  cursor: pointer;
 }
 
-.staff-page .staff-button {
-  margin-top: 10px;
-  padding: 12px 24px;
-  font-size: 16px;
-  background-color: rgba(98, 44, 91, 0.9);
-  color: #f0f0f0;
-  border: none;
+
+.staff-page .staff-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  padding: 150px 20px 20px;
+}
+
+
+.staff-page .staff-card {
+  background-color: rgba(60, 25, 55, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.staff-page .staff-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.staff-page .staff-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+  padding: 10px 0;
+  background-color: rgba(40, 5, 35, 0.9);
   border-radius: 5px;
   cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: center;
 }
 
-.staff-page .staff-button.manage {
-  margin-top: 20px;
+.staff-page .staff-card-description {
+  font-size: 20px;
+  color: white;
+  margin-top: 10px;
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 5px;
 }
 
-.staff-page .staff-button.manage:hover,
-.staff-page .staff-button.logout:hover {
-  background-color: rgba(156, 128, 152, 0.9);
+
+.staff-page .staff-logout {
+  display: block;
+  margin: 30px auto 60px;
+  padding: 12px 24px;
+  font-size: 20px;
+  background-color:rgba(60, 25, 55, 0.9);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 200px;
+  transition: background-color 0.3s ease;
 }
+
+.staff-page .staff-logout:hover {
+  background-color:  rgba(40, 5, 35, 0.9);
+}
+
 
 @media (max-width: 768px) {
-  .login-page,
-  .staff-page,
-  .admin-page {
-    background-position: center top;
+  .staff-page .staff-container {
+    background-position: top center;
   }
 
-  .staff-title,
-  .admin-title {
-    font-size: 32px;
+  .staff-page header.staff-header {
+    padding: 20px 10px 40px;
   }
 
-  .staff-username,
-  .admin-username {
-    font-size: 20px;
+  .staff-page .staff-title {
+    font-size: 28px;
   }
 
-  .staff-subtext,
-  .admin-subtitle {
+  .staff-page .staff-username {
+    font-size: 18px;
+  }
+
+  .staff-page .staff-subtitle {
+    font-size: 14px;
+  }
+
+  .staff-page .staff-profile {
+    width: 50px;
+    height: 50px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .staff-page .staff-card {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .staff-page .staff-card-title {
     font-size: 16px;
   }
 
-  .staff-profile,
-  .admin-profile {
-    width: 60px;
-    height: 60px;
+  .staff-page .staff-card-description {
+    font-size: 12px;
   }
 
-  .staff-button,
-  .admin-button {
+  .staff-page .staff-logout {
     width: 90%;
     font-size: 14px;
   }
 }
+
+

@@ -10,7 +10,8 @@ import AdminDash from './pages/AdminDash';
 import BookingForm from "./pages/BookingForm"; // ✅ add this at the top
 import ResidentsReports from "./pages/ResidentsReports";
 import StaffReports from "./pages/StaffReports";
-
+/*import ResidentCalendar from './pages/ResidentCalendar'; // Adjust path if needed
+import EventDetails from './pages/EventDetails'; // Adjust path for event details page*/
 
 
 function App() {
