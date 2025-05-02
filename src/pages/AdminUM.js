@@ -7,7 +7,7 @@ export default function AdminUM() {
   const [residents, setResidents] = useState([]);
   const [staff, setStaff] = useState([]);
   const [revoked, setRevoked] = useState([]);
-  const [announcement, setAnnouncement] = useState("");
+ // const [announcement, setAnnouncement] = useState("");   // use with new apis
   const navigate = useNavigate();
 
   const fetchUsers = async () => {
@@ -59,10 +59,10 @@ export default function AdminUM() {
     fetchUsers();
   };
 
-  const handlePostAnnouncement = () => {
+  /*const handlePostAnnouncement = () => {
     alert("Announcement posted: " + announcement);
     setAnnouncement("");
-  };
+  };*/    //uncomment when using apis
 
   return (
     <main className="admin-container">

@@ -8,7 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 
 export default function Resident() {
   const [userInfo, setUserInfo] = useState({ name: 'Loading...', photo: '' });
-  const [hovered, setHovered] = useState({ logout: false, padel: false, tennis: false, soccer: false });
+  //const [hovered, setHovered] = useState({ logout: false, padel: false, tennis: false, soccer: false });    //use with new apis
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Bookings');
   const [events, setEvents] = useState([]);
