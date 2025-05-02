@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+.admin-page .admin-container {
+  font-family: Arial, sans-serif;
+  background-image: url("track.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  text-align: center;
+  height: 100vh;
+  padding-top: 120px;
+  position: relative;
+}
+
+/* Profile image top right */
+.admin-page .admin-profile {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Main Title */
+.admin-page .admin-title {
+  font-size: 48px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px black;
+}
+
+/* User name */
+.admin-page .admin-username {
+  font-size: 36px;
+  font-weight: normal;
+  margin: 10px 0;
+  text-shadow: 1px 1px 3px black;
+}
+
+/* Subtitle */
+.admin-page .admin-subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 3px black;
+}
+
+/* Buttons */
+.admin-page .admin-button {
+  display: block;
+  margin: 10px auto;
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #01280797;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 200px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-page .admin-button:hover {
+  background-color: #1b5e20;
+}
+
+.admin-page .admin-logout {
+  margin-top: 20px;
+  background-color: #33691e;
+}
+
+@media (max-width: 768px) {
+  .admin-page .admin-container {
+    padding-top: 60px;
+    height: auto;
+    background-position: top center;
+  }
+
+  .admin-page .admin-title {
+    font-size: 28px;
+  }
+
+  .admin-page .admin-username {
+    font-size: 18px;
+  }
+
+  .admin-page .admin-subtitle {
+    font-size: 14px;
+  }
+
+  .admin-page .admin-profile {
+    width: 50px;
+    height: 50px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .admin-page .admin-button {
+    width: 90%;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}

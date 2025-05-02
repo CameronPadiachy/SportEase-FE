@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tennis Booking</title>
+  <link rel="stylesheet" href="tennis.css" />
+  <style>
+    .time-options {
+      display: none;
+      margin-top: 10px;
+    }
+
+    fieldset.time-slot-fieldset {
+      border: none;
+      padding: 0;
+      margin: 5px 0;
+    }
+
+    button.time-option {
+      padding: 10px 15px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background-color 0.3s;
+    }
+
+    button.time-option:hover {
+      background-color: #a5b7c0;
+      color: #fff;
+    }
+
+    button.time-option.selected {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body class="tennis-page">
+
+  <section class="image-section">
+    <img src="courts.jpg" alt="Image 1" class="image1" />
+    <img src="images.jpeg" alt="Image 2" class="image2" />
+  </section>
+
+  <section class="form">
+    <main class="form-background">
+      <form id="bookingForm">
+        <fieldset>
+          <label for="date">What is the date?</label><br />
+          <input type="date" name="date" id="date" required />
+        </fieldset>
+
+        <fieldset class="time-slot-fieldset time-options" id="timeSlots">
+          <legend>Select a 2-hour time slot:</legend>
+          <button type="button" class="time-option">08:00 - 10:00</button>
+          <button type="button" class="time-option">10:00 - 12:00</button>
+          <button type="button" class="time-option">12:00 - 14:00</button>
+          <button type="button" class="time-option">14:00 - 16:00</button>
+          <button type="button" class="time-option">16:00 - 18:00</button>
+          <button type="button" class="time-option">18:00 - 20:00</button>
+        </fieldset>
+
+        <fieldset>
+          <label for="time">What time?</label><br />
+          <input type="text" name="time" id="time" placeholder="Select from slots" required readonly />
+        </fieldset>
+
+        <fieldset>
+          <button type="submit" class="button" id="submit">SUBMIT</button>
+        </fieldset>
+      </form>
+
+    </main>
+  </section>
+
+  <script>
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    const timeSlots = document.getElementById('timeSlots');
+    const buttons = document.querySelectorAll('.time-option');
+    const bookingForm = document.getElementById('bookingForm');
+
+    dateInput.addEventListener('change', () => {
+      timeSlots.style.display = 'block';
+    });
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('selected'));
+        button.classList.add('selected');
+        timeInput.value = button.textContent.trim();
+      });
+    });
+
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const date = dateInput.value; // e.g., "2025-05-05"
+      const time = timeInput.value; // e.g., "08:00 - 10:00"
+      const [start, end] = time.split(" - "); // ["08:00", "10:00"]
+
+      const bookingData = {
+        facility_id: 1, // use the actual ID from your DB
+        start_time: new Date(`${date}T${start}:00`).toISOString(),
+        end_time: new Date(`${date}T${end}:00`).toISOString(),
+        status: "pending",
+        approved: false
+      };
+
+      try {
+        const response = await fetch('https://csmf-ayf7egbaedhug4g6.southafricanorth-01.azurewebsites.net/api/booking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(bookingData)
+        });
+
+        if (response.ok) {
+          alert('Booking submitted successfully!');
+          bookingForm.reset();
+          timeSlots.style.display = 'none';
+        } else {
+          const errData = await response.json();
+          alert('Failed to submit booking: ' + (errData.message || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Server error occurred.');
+      }
+    });
+
+  </script>
+
+
+</body>
+
+</html>
