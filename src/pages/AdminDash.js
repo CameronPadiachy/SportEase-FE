@@ -182,6 +182,18 @@ export default function Admin() {
               required
             />
 
+            <label htmlFor="maxParticipants">Maximum Participants:</label>
+            <input
+              type="number"
+              id="maxParticipants"
+              name="maxParticipants"
+              placeholder="Enter max number of participants"
+              value={eventDetails.maxParticipants}
+              onChange={handleEventChange}
+              required
+              min="1"
+            />
+
             <label htmlFor="event-description">Event Description:</label>
             <textarea
               id="event-description"
