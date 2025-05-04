@@ -4,6 +4,7 @@ export default function BookingForm() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [showTimeSlots, setShowTimeSlots] = useState(false);
+
   const timeSlots = [
     "08:00 - 10:00",
     "10:00 - 12:00",
@@ -16,6 +17,12 @@ export default function BookingForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const uid = localStorage.getItem("uid");
+    if (!uid) {
+      alert("User not recognized. Please log in again.");
+      return;
+    }
+
     const facilityId = parseInt(localStorage.getItem("selectedFacility"), 10);
     if (!facilityId) {
       alert("No facility selected. Please go back and choose a sport.");
@@ -24,6 +31,7 @@ export default function BookingForm() {
 
     const [start, end] = time.split(" - ");
     const bookingData = {
+      uid, // ✅ include user ID
       facility_id: facilityId,
       start_time: new Date(`${date}T${start}:00`).toISOString(),
       end_time: new Date(`${date}T${end}:00`).toISOString(),
@@ -48,7 +56,7 @@ export default function BookingForm() {
         setDate("");
         setTime("");
         setShowTimeSlots(false);
-        localStorage.removeItem("selectedFacility"); // optional: clear it after booking
+        localStorage.removeItem("selectedFacility");
       } else {
         const errData = await response.json();
         alert("Failed to submit booking: " + (errData.message || "Unknown error"));

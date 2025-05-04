@@ -1,4 +1,4 @@
-// src/pages/Login.js
+
 import { auth, provider, db } from "../firebase/config";
 import { signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -8,27 +8,28 @@ import React, { useState, useEffect } from "react";
 export default function Login() {
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
+
   const addUserToSQL = async (uid) => {
     try {
-      const response = await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/users/', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ uid })
-      });
+      const response = await fetch(
+        'https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/users/',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid })
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Failed to add user to SQL database');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('SQL user creation error:', error);
-      // Continue even if SQL fails (Firebase is primary)
+      // continue even if SQL fails
     }
   };
-
 
   const handleLogin = async () => {
     setStatus("");
@@ -38,12 +39,13 @@ export default function Login() {
       const userRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userRef);
 
+      // ✅ Save UID every time
+      localStorage.setItem('uid', user.uid);
 
       let role = "resident";
       let access = 1;
 
       if (!docSnap.exists()) {
-        // New user — create Firestore document
         await setDoc(userRef, {
           uid: user.uid,
           displayName: user.displayName,
@@ -51,11 +53,9 @@ export default function Login() {
           role,
           access,
           createdAt: serverTimestamp(),
-        }); 
+        });
         await addUserToSQL(user.uid);
-
       } else {
-        // Existing user — get their role and access
         const data = docSnap.data();
         role = data.role || "resident";
         access = data.access ?? 0;
@@ -66,7 +66,6 @@ export default function Login() {
         return;
       }
 
-      // Redirect based on role
       if (role === "admin") navigate("/admin");
       else if (role === "staff") navigate("/staff");
       else navigate("/resident");
@@ -78,7 +77,6 @@ export default function Login() {
   };
 
   useEffect(() => {
-    // Add login-page class to <body> for scoped styles
     document.body.classList.add("login-page");
     return () => {
       document.body.classList.remove("login-page");
@@ -130,7 +128,6 @@ export default function Login() {
         <p className="status-text">{status}</p>
         <img src="finalLogo.png" alt="SportEase Logo" className="login-logo" />
       </section>
-      
     </main>
   );
 }

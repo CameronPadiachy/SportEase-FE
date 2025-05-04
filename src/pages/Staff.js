@@ -27,6 +27,7 @@ export default function Staff() {
   }, [navigate]);
 
   const handleLogout = () => {
+    localStorage.removeItem('uid');  
     signOut(auth).then(() => navigate('/'));
   };
 

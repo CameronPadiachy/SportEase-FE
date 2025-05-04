@@ -87,9 +87,9 @@ export default function Resident() {
   }, [navigate]);
 
   const handleLogout = () => {
+    localStorage.removeItem('uid');  
     signOut(auth).then(() => navigate('/'));
   };
-
   const goToFacility = (facilityId) => {
     localStorage.setItem('selectedFacility', facilityId);
     navigate('/booking');

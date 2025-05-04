@@ -36,7 +36,8 @@ export default function AdminDash() {
   }, [navigate]);
 
   const handleLogout = () => {
-    signOut(auth).then(() => navigate("/"));
+    localStorage.removeItem('uid'); 
+    signOut(auth).then(() => navigate('/'));
   };
 
   const goToUserManagement = () => {
@@ -54,7 +55,7 @@ export default function AdminDash() {
     }
 
     try {
-      const res = await fetch("https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/notif", {
+      const res = await fetch("https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/notif/general", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid: null, message: announcement }) 
