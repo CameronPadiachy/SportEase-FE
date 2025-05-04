@@ -8,6 +8,27 @@ import React, { useState, useEffect } from "react";
 export default function Login() {
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
+  const addUserToSQL = async (uid) => {
+    try {
+      const response = await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/users/', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ uid })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add user to SQL database');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('SQL user creation error:', error);
+      // Continue even if SQL fails (Firebase is primary)
+    }
+  };
+
 
   const handleLogin = async () => {
     setStatus("");
@@ -16,6 +37,7 @@ export default function Login() {
       const user = result.user;
       const userRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userRef);
+
 
       let role = "resident";
       let access = 1;
@@ -29,7 +51,9 @@ export default function Login() {
           role,
           access,
           createdAt: serverTimestamp(),
-        });
+        }); 
+        await addUserToSQL(user.uid);
+
       } else {
         // Existing user — get their role and access
         const data = docSnap.data();
