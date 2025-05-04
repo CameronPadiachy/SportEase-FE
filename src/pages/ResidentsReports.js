@@ -36,7 +36,7 @@ export default function ResidentReports() {
       setShowForm(false);
       setName("");
       setMessage("");
-      fetchReports(); // ✅ fetch updated reports instead of reloading the page
+      fetchReports(); //  fetch updated reports instead of reloading the page
     } catch (error) {
       console.error("Error adding report: ", error);
       alert("Failed to submit report.");

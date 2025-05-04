@@ -1,4 +1,4 @@
-// ✅ Mock Firestore before any imports
+//  Mock Firestore before any imports
 jest.mock('firebase/firestore', () => ({
     collection: jest.fn(),
     getDocs: jest.fn(),

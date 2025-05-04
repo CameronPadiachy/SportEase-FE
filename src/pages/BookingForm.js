@@ -33,7 +33,7 @@ export default function BookingForm() {
 
     try {
       const response = await fetch(
-        "https://csmf-ayf7egbaedhug4g6.southafricanorth-01.azurewebsites.net/api/booking",
+        "https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/booking",
         {
           method: "POST",
           headers: {

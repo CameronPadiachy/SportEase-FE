@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const API_URL= 'https://csmf-ayf7egbaedhug4g6.southafricanorth-01.azurewebsites.net/api/booking';
+const API_URL= 'https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/booking';
 
 export default function AdminBooking() {
   const [bookings, setBookings] = useState([]);
