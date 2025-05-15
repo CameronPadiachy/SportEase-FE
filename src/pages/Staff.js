@@ -27,7 +27,7 @@ export default function Staff() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('uid');  
+    localStorage.removeItem('uid');
     signOut(auth).then(() => navigate('/'));
   };
 
@@ -39,20 +39,23 @@ export default function Staff() {
     navigate('/staff-reports');
   };
 
+  const goToMaintenanceStats = () => {
+    navigate('/maintenance-stats');
+  };
+
   return (
     <>
-    <main className="staff-container">
-      <header className="staff-header">
-        <img
-          src={userInfo.photo}
-          alt="Profile"
-          className="staff-profile"
-        />
-        <h1 className="staff-title">Staff Dashboard</h1>
-        <h2 className="staff-username">{userInfo.name}</h2>
-        <p className="staff-subtitle">You can view and update maintenance reports here.</p>
-      </header>
-
+      <main className="staff-container">
+        <header className="staff-header">
+          <img
+            src={userInfo.photo}
+            alt="Profile"
+            className="staff-profile"
+          />
+          <h1 className="staff-title">Staff Dashboard</h1>
+          <h2 className="staff-username">{userInfo.name}</h2>
+          <p className="staff-subtitle">You can view and update maintenance reports here.</p>
+        </header>
 
         <section className="staff-cards">
           <article className="staff-card">
@@ -72,13 +75,20 @@ export default function Staff() {
               View and manage reports. Make updates and check progresses.
             </p>
           </article>
+
+          <article className="staff-card">
+            <button onClick={goToMaintenanceStats} className="staff-card-title">
+              Maintenance Report Stats
+            </button>
+            <p className="staff-card-description">
+              View analytics like resolution time and open/closed counts.
+            </p>
+          </article>
         </section>
 
         <button onClick={handleLogout} className="staff-logout">
           Log Out
         </button>
-
-
       </main>
     </>
   );
