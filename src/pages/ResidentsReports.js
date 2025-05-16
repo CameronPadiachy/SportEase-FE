@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase/config"; // adjust if your firebase.js is elsewhere
+import { db } from "../firebase/config";
 
 export default function ResidentReports() {
   const [reports, setReports] = useState([]);
@@ -8,7 +8,6 @@ export default function ResidentReports() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  // Fetch all reports from Firestore
   async function fetchReports() {
     const querySnapshot = await getDocs(collection(db, "maintenance_reports"));
     const reportsList = querySnapshot.docs.map(doc => ({
@@ -20,14 +19,15 @@ export default function ResidentReports() {
 
   useEffect(() => {
     fetchReports();
+    const interval = setInterval(fetchReports, 5000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Add a new maintenance report
   async function handleAddReport(e) {
     e.preventDefault();
     try {
       await addDoc(collection(db, "maintenance_reports"), {
-        createdBy: name, // store the resident's typed name
+        createdBy: name,
         reportMessage: message,
         createdAt: serverTimestamp(),
         status: "submitted"
@@ -36,14 +36,13 @@ export default function ResidentReports() {
       setShowForm(false);
       setName("");
       setMessage("");
-      fetchReports(); //  fetch updated reports instead of reloading the page
+      fetchReports();
     } catch (error) {
       console.error("Error adding report: ", error);
       alert("Failed to submit report.");
     }
   }
 
-  // Get color based on status
   function getStatusColor(status) {
     if (status === "submitted") return "red";
     if (status === "in progress") return "orange";
@@ -52,66 +51,123 @@ export default function ResidentReports() {
   }
 
   return (
-    <main style={{ padding: "20px" }}>
-      <h1>Maintenance Issues</h1>
+    <main style={{ padding: "40px", fontFamily: "Arial, sans-serif", maxWidth: "900px", margin: "auto" }}>
+      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>🛠️ Submit & View Maintenance Issues</h1>
 
-      <button onClick={() => setShowForm(!showForm)} style={{ marginBottom: "20px" }}>
-        {showForm ? "Cancel" : "Add New Report"}
-      </button>
+      <section style={{ textAlign: "center", marginBottom: "30px" }}>
+        <button
+          onClick={() => setShowForm(!showForm)}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: showForm ? "#ccc" : "#007bff",
+            color: showForm ? "#000" : "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer"
+          }}
+        >
+          {showForm ? "Cancel" : "Add New Report"}
+        </button>
+      </section>
 
       {showForm && (
-        <form onSubmit={handleAddReport} style={{ marginBottom: "20px" }}>
-          <section>
-            <label>Your Name:</label>
+        <form
+          onSubmit={handleAddReport}
+          style={{
+            marginBottom: "40px",
+            padding: "20px",
+            backgroundColor: "#f9f9f9",
+            borderRadius: "8px",
+            boxShadow: "0 0 8px rgba(0,0,0,0.1)"
+          }}
+        >
+          <section style={{ marginBottom: "15px" }}>
+            <label><strong>Your Name:</strong></label>
             <br />
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ width: "300px", padding: "8px", marginBottom: "10px" }}
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginTop: "5px"
+              }}
             />
           </section>
 
           <section>
-            <label>Describe the Issue:</label>
+            <label><strong>Describe the Issue:</strong></label>
             <br />
             <textarea
               required
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              style={{ width: "300px", height: "100px", padding: "8px" }}
+              style={{
+                width: "100%",
+                height: "100px",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginTop: "5px"
+              }}
             />
           </section>
 
           <br />
-          <button type="submit">Submit Report</button>
+          <button
+            type="submit"
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer"
+            }}
+          >
+            Submit Report
+          </button>
         </form>
       )}
 
       <section>
         {reports.length === 0 ? (
-          <p>No reports yet.</p>
+          <p style={{ textAlign: "center" }}>No reports yet.</p>
         ) : (
-          <ul>
+          <ul style={{ listStyle: "none", padding: 0 }}>
             {reports.map((report) => (
               <li
                 key={report.id}
                 style={{
-                  marginBottom: "20px",
-                  paddingBottom: "10px",
-                  borderBottom: "1px solid #ccc"
+                  marginBottom: "30px",
+                  padding: "20px",
+                  borderRadius: "10px",
+                  boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+                  backgroundColor: "#ffffff"
                 }}
               >
-                <p><strong>Name:</strong> {report.createdBy}</p>
-                <p><strong>Issue:</strong> {report.reportMessage}</p>
-                <p><strong>Date:</strong> {report.createdAt?.toDate().toLocaleString()}</p>
+                <p><strong>👤 Name:</strong> {report.createdBy}</p>
+                <p><strong>📄 Issue:</strong> {report.reportMessage}</p>
+                <p><strong>📅 Date:</strong> {report.createdAt?.toDate().toLocaleString()}</p>
                 <p>
-                  <strong>Status:</strong>{" "}
-                  <span style={{ color: getStatusColor(report.status), fontWeight: "bold" }}>
+                  <strong>📌 Status:</strong>{" "}
+                  <span style={{
+                    fontWeight: "bold",
+                    color: getStatusColor(report.status),
+                    textTransform: "capitalize"
+                  }}>
                     {report.status}
                   </span>
                 </p>
+                {report.feedback && (
+                  <p style={{ backgroundColor: "#e7f3ff", padding: "10px", borderRadius: "5px", marginTop: "10px" }}>
+                    <strong>💬 Staff Feedback:</strong> {report.feedback}
+                  </p>
+                )}
               </li>
             ))}
           </ul>

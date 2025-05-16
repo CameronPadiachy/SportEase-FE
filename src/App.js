@@ -11,6 +11,8 @@ import BookingForm from "./pages/BookingForm";
 import ResidentsReports from "./pages/ResidentsReports";
 import StaffReports from "./pages/StaffReports";
 import ResidentEvents from "./pages/ResidentEvents"; 
+import MaintenanceStats from "./pages/MaintenanceStats";
+
 
 function App() {
   return (
@@ -25,7 +27,7 @@ function App() {
       <Route path="/staff-reports" element={<StaffReports />} />
       <Route path="/resident-reports" element={<ResidentsReports />} />
       <Route path="/admin/management" element={<AdminUM />} />
-
+      <Route path="/maintenance-stats" element={<MaintenanceStats />} />
       <Route path="/resident-events" element={<ResidentEvents />} />
 
     </Routes>
