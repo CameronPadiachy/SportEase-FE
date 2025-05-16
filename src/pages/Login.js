@@ -1,11 +1,10 @@
-
 import { auth, provider, db } from "../firebase/config";
 import { signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
-export default function Login() {
+export default function LandingPage() {
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
 
@@ -19,15 +18,10 @@ export default function Login() {
           body: JSON.stringify({ uid })
         }
       );
-
-      if (!response.ok) {
-        throw new Error('Failed to add user to SQL database');
-      }
-
+      if (!response.ok) throw new Error('Failed to add user to SQL database');
       return await response.json();
     } catch (error) {
       console.error('SQL user creation error:', error);
-      // continue even if SQL fails
     }
   };
 
@@ -39,9 +33,7 @@ export default function Login() {
       const userRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userRef);
 
-      // ✅ Save UID every time
       localStorage.setItem('uid', user.uid);
-
       let role = "resident";
       let access = 1;
 
@@ -83,51 +75,73 @@ export default function Login() {
     };
   }, []);
 
-  useEffect(() => {
-    const images = ["slideF.jpeg", "slide2.jpeg", "slide3.jpeg"];
-    let index = 0;
-    const interval = setInterval(() => {
-      const slideshow = document.getElementById("slideshow");
-      if (slideshow) {
-        index = (index + 1) % images.length;
-        slideshow.src = images[index];
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <main className="page-wrapper">
-      <header>
-        <h1 className="header-title">SportEase</h1>
-        <p className="header-motto"><br /><br />CTRL ALT COMPLETE</p>
-        <img
-          src="slideF.jpeg"
-          alt="SportEase Banner"
-          className="hero-image"
-          id="slideshow"
-        />
-      </header>
+    <main>
+      <section className="hero">
+        <video autoPlay loop muted playsInline id="video">
+          <source src="/images/motionbackground.mp4" type="video/mp4" />
+        </video>
+        <h1 className="title">Sportease</h1>
+        <section className="loginblock">
+          <button className="google-btn" onClick={handleLogin}>
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google logo"
+            />
+            Sign in with Google
+          </button>
+          <p className="status-text">{status}</p>
+        </section>
+      </section>
 
-      <section className="text-panel">
-        <h2 className="text-heading">Experience it now!</h2>
+      <section className="section" id="facilities">
+        <h2>Facilities</h2>
         <p>
-          Smart booking, made simple — Reserve your favourite padel, soccer and tennis facilities all in one place.
-          <br /><br />
-          Instant Issue Reporting — Spotted a maintenance issue? Report it in seconds.
-          <br /><br />
-          Stay connected — Get notified instantly about upcoming events and updates.
+          At SportEase, we pride ourselves on offering world-class sports
+          facilities designed to inspire excellence and elevate every athlete's
+          experience. Our venues are equipped with state-of-the-art surfaces,
+          lighting, and safety features, ensuring the highest standards for
+          training and competition. From pristine tennis courts and
+          professional-grade football fields to indoor arenas with climate
+          control and spectator seating, every space is built with precision and
+          passion. Whether you're a seasoned athlete or a casual player, you'll
+          find the perfect environment to play, grow, and achieve your goals.
+        </p>
+        <section className="courts">
+          <img src="/images/black court.jpeg" alt="court1" />
+          <img src="/images/download (3).jpeg" alt="court2" />
+          <img src="/images/soccerlanding.jpeg" alt="soccerlanding" />
+        </section>
+      </section>
+
+      <section className="section" id="about">
+        <h2>About Us</h2>
+        <p>
+          At SportEase, we’re passionate about making sports accessible,
+          efficient, and enjoyable. Our platform streamlines facility bookings,
+          event management, and community engagement — all in one place. Whether
+          you're an athlete, organizer, or enthusiast, SportEase empowers you to
+          focus on what matters: the game.
         </p>
       </section>
 
-      <section className="login-box">
-        <button className="btn-google" onClick={handleLogin}>
-          Sign in with Google
-        </button>
-        <p className="status-text">{status}</p>
-        <img src="finalLogo.png" alt="SportEase Logo" className="login-logo" />
+      <section className="section" id="contact">
+        <h2>Contact</h2>
+        <ul>
+          <li>support@sportease.com</li>
+          <li>call 123-456-7890</li>
+          <li>Or talk to our support staff. We’re always here to help!</li>
+        </ul>
       </section>
+
+      <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+        <nav>
+          <a href="#about">About Us</a>
+          <a href="#contact">Contact</a>
+          <a href="#facilities">Facilities</a>
+        </nav>
+      </footer>
     </main>
   );
 }

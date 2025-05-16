@@ -183,21 +183,23 @@
   font-weight: bold;
 }
 
+/* Announcements Section */
 .resident-announcements-section .announcement-block {
   background-color: #00000088;
   color: #fff;
-  height: 500px;
+  height: auto; /* Allow height to adjust based on content */
   margin-top: 20px;
   border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 20px; /* Add padding to avoid the text touching the edges */
+  display: block; /* Stack announcements vertically */
 }
+
 
 .resident-announcements-section .announcement-block p {
   font-size: 18px;
   font-weight: normal;
   color: #783004e5;
+  margin-bottom: 10px; /* Add space between each announcement */
 }
 
 /* Booking Column */
