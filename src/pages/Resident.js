@@ -5,6 +5,7 @@ import { auth, db } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import FacilityStats from './facilityStats';
 
 export default function Resident() {
   const [userInfo, setUserInfo] = useState({ name: 'Loading...', photo: '' });
@@ -124,6 +125,7 @@ export default function Resident() {
           <li onClick={() => handleTabClick('Bookings')}>My Bookings</li>
           <li onClick={() => handleTabClick('Announcements')}>Announcements</li>
           <li onClick={() => handleTabClick('Notifications')}>Notifications</li>
+          <li onClick={() => handleTabClick('FacilityTrends')}>Facility Trends</li>
           <li onClick={navigateToEvents}>Join Events</li>
           <li onClick={navigateToReports}>Reports</li>
         </ul>
@@ -141,6 +143,7 @@ export default function Resident() {
             <li onClick={() => handleTabClick('Announcements')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Announcements' ? 'bold' : 'normal' }}>Announcements</li>
             <li onClick={() => handleTabClick('Notifications')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Notifications' ? 'bold' : 'normal' }}>Notifications</li>
             <li onClick={() => handleTabClick('Reports')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Reports' ? 'bold' : 'normal' }}>Reports</li>
+            <li onClick={() => handleTabClick('FacilityTrends')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'FacilityTrends' ? 'bold' : 'normal' }}>Facility Trends</li>
           </ul>
         </nav>
       </header>
@@ -196,6 +199,11 @@ export default function Resident() {
           initialView="dayGridMonth"
           events={events}
         />
+      </section>
+
+      {/* Facility Trend Section */}
+      <section id="facilitytrends" className="facility-trend-section">
+        <FacilityStats />
       </section>
     </main>
   );
