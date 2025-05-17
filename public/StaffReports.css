@@ -1,10 +1,8 @@
-
-
 .staff-reports-main {
   background-color: #000000;
   padding-top: 40px;
   font-family: Arial, sans-serif;
-  max-width: 100;
+  max-width: 100%;
   margin: auto;
 }
 
@@ -13,10 +11,12 @@
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px #2a6f99;
   text-align: center;
-  color:white;
+  color: white;
 }
+
 .no-reports {
   text-align: center;
+  color: white;
 }
 
 .report-list {
@@ -32,13 +32,11 @@
   box-shadow: 0 0 10px #2a6f99;
   background-color: rgba(248, 248, 248, 0.29);
   backdrop-filter: blur(10px);
- 
 }
 
 .status-text {
   font-weight: bold;
   text-transform: capitalize;
-
 }
 
 /* ✅ Dynamic Status Styling */
@@ -55,19 +53,18 @@
 }
 
 .feedback-box {
-  background-color: rgb(42, 111, 153, 0.413);
+  background-color: rgba(42, 111, 153, 0.413);
   padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
 }
 
 .status-dropdown {
-  background-color: rgb(0, 0, 0, 0.413);
+  background-color: rgba(0, 0, 0, 0.413);
   padding: 6px 10px;
   margin-left: 10px;
   border-radius: 4px;
   color: white;
-  
 }
 
 .btn-status,
@@ -78,28 +75,27 @@
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
+  font-size: 15px;
+  width: fit-content;
 }
 
 .btn-status {
   background-color: #01254b;
   color: white;
-  font-size: 15px;
 }
 
 .btn-feedback {
   background-color: #2890a7;
   color: white;
-  font-size: 15px;
 }
 
 .btn-delete {
   background-color: #76000c;
   color: white;
-  font-size: 15px;
 }
 
 .feedback-input {
-  background-color:rgb(42, 111, 153, 0.413);
+  background-color: rgba(42, 111, 153, 0.413);
   color: white;
   font-size: 15px;
   width: 100%;
@@ -110,18 +106,58 @@
   border-radius: 5px;
   font-family: Arial;
 }
- .staff-reports-main footer {
+
+.staff-reports-main footer {
   background-color: rgba(35, 31, 31, 0.1);
   backdrop-filter: blur(8px);
   color: white;
   text-align: center;
   padding: 20px;
   font-size: 14px;
-  position: relative; /* or fixed if you want it always visible */
+  position: relative;
   bottom: 0;
   width: 100%;
   height: fit-content;
 }
 
 
+@media (max-width: 768px) {
+  .staff-reports-title {
+    font-size: 32px;
+    padding: 0 10px;
+  }
 
+  .report-card {
+    padding: 15px;
+    margin: 20px 10px;
+  }
+
+  .btn-status,
+  .btn-feedback,
+  .btn-delete {
+    font-size: 14px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+  }
+
+  .status-dropdown {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .feedback-box {
+    padding: 8px;
+  }
+
+  .feedback-input {
+    font-size: 14px;
+    height: 70px;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 15px;
+  }
+}
