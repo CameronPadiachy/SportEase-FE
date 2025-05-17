@@ -1,10 +1,28 @@
 .staffUM-page .staff-container {
-    padding: 40px;
-    font-family: Arial;
-    background-color: rgba(132, 114, 137, 0.604);
-    text-align: center;
-    min-height: 100vh;
-  }
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at bottom left, #01254b 0%, #000000 80%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding-top: 0; 
+  position: relative;
+  overflow-x: hidden;
+}
+
+.staffUM-page header.staff-header {
+  background-color:  rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 40px 20px 60px;
+  position: relative;
+  text-align: center;
+  
+}
+
   
   .staffUM-page .staff-heading {
     font-size: 30px;
@@ -13,19 +31,18 @@
     text-shadow: 2px 2px 4px rgb(255, 255, 255);
   }
   
-  .staffUM-page .staff-subheading {
-    font-size: 24px;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-  
+  .staffUM-page .staff-subtitle {
+  font-size: 20px;
+  margin-top: 10px;
+  text-shadow: 1px 2px 3px #2a6f99;
+}
   .staffUM-page .staff-user-list {
     list-style-type: none;
     padding: 0;
     margin-bottom: 30px;
-    background-color: rgba(127, 111, 125, 0.413);
+    background-color: rgb(42, 111, 153, 0.413);
     border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(252, 252, 252, 0.852);
+    box-shadow: 0 4px 8px #ffffff;
   }
   
   .staffUM-page .staff-user-item {
@@ -37,7 +54,7 @@
 
   .staffUM-page .btn-revoke {
     padding: 5px 10px;
-    background-color: #754646;
+    background-color: #00157c;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -48,7 +65,7 @@
   
   .staffUM-page .btn-grant {
     padding: 5px 10px;
-    background-color: #8b2354;
+    background-color: #3192c2;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -58,18 +75,22 @@
   }
   
   .staffUM-page .btn-back {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: rgba(60, 25, 55, 0.9);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.852);
-  }
+  position: absolute;
+  top: 30px;       /* Distance from the top */
+  left: 30px;      /* Distance from the left (you can change this) */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: rgba(147, 143, 143, 0.555);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+}
   
   .staffUM-page .btn-back:hover {
-    background-color: rgba(81, 65, 89, 0.5);
+    background-color: #2a6f99;
+  
   }
   
   
@@ -86,12 +107,13 @@
   .staffUM-page .user-management-section {
     flex: 1; 
     text-align: center;
-    background-color: rgba(60, 25, 55, 0.9); 
+    background-color: rgba(52, 52, 54, 0.468); 
     border-radius: 15px;
     padding: 30px;  
     min-height: 300px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  }
-  
+    box-shadow: 0 4px 8px #2a6f99;  
+    backdrop-filter: blur(10px);
+  }
   
   .staffUM-page .user-management-section h2 {
     font-size: 28px;
@@ -103,7 +125,20 @@
     max-height: 250px;
     overflow-y: auto;  
   }
+  
 
+ .staff-container footer {
+  background-color: rgba(244, 244, 244, 0.1);
+  backdrop-filter: blur(8px);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  position: relative; /* or fixed if you want it always visible */
+  bottom: 0;
+  width: 100%;
+  height: fit-content;
+}
   
 /* Mobile tweaks */
 @media (max-width: 768px) {

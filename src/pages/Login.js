@@ -108,9 +108,9 @@ export default function LandingPage() {
           find the perfect environment to play, grow, and achieve your goals.
         </p>
         <section className="courts">
-          <img src="/images/black court.jpeg" alt="court1" />
-          <img src="/images/download (3).jpeg" alt="court2" />
+          <img src="/images/blackcourt.jpeg" alt="court1" />
           <img src="/images/soccerlanding.jpeg" alt="soccerlanding" />
+          <img src="/images/download (3).jpeg" alt="court2" />
         </section>
       </section>
 

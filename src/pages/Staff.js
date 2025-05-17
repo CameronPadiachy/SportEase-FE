@@ -48,9 +48,7 @@ export default function Staff() {
       <main className="staff-container">
         <header className="staff-header">
           <img
-            src={userInfo.photo}
-            alt="Profile"
-            className="staff-profile"
+            src={userInfo.photo} alt="Profile" className="staff-profile"
           />
           <h1 className="staff-title">Staff Dashboard</h1>
           <h2 className="staff-username">{userInfo.name}</h2>
@@ -89,6 +87,11 @@ export default function Staff() {
         <button onClick={handleLogout} className="staff-logout">
           Log Out
         </button>
+
+        <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+      </footer>
+
       </main>
     </>
   );

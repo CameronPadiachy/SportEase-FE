@@ -1,0 +1,200 @@
+
+
+/* Full-page dark-themed main container */
+.maintenance-stats-main {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #f0f0f0;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  background: radial-gradient(circle at bottom left, #01254b 0%, #000000 80%);
+
+}
+header.stats-header {
+  background-color:  rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 40px 10px 60px;
+  position: relative;
+  text-align: center;
+ 
+}
+
+.stats-username {
+  font-size: 36px;
+  font-weight: normal;
+  margin: 0px 0;
+  text-shadow: 1px 2px 3px #2a6f99;
+}
+
+.stats-subtitle {
+  font-size: 20px;
+  margin-top: 10px;
+  text-shadow: 1px 2px 3px #2a6f99;
+ 
+}
+
+ .stats-profile {
+  color: rgb(110, 9, 9);
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.maintenance-title {
+  display: inline-block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  border-bottom: 2px solid #2a6f99;
+  padding-bottom: 10px;
+  margin-bottom: 40px;
+}
+
+.stats-header {
+  text-align: center; /* To center the inline-block title */
+}
+
+
+/* Button container */
+.export-buttons {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.btn-export-csv,
+.btn-export-pdf {
+  margin: 15px 12px;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-export-csv {
+  background-color: #88898984;
+  color: #ffffff;
+}
+
+.btn-export-csv:hover {
+  background-color: #01254b;
+  transform: scale(1.05);
+}
+
+.btn-export-pdf {
+  background-color: #9ea19f6d;
+  color: #ffffff;
+}
+
+.btn-export-pdf:hover {
+  background-color: #01254b;
+  transform: scale(1.05);
+}
+
+/* Loading state */
+.loading-message {
+  text-align: center;
+  font-size: 18px;
+  color: #aaaaaa;
+}
+
+/* Stat grid */
+.stats-section {
+    margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 600px) {
+  .stats-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stat card base */
+.stats-card {
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  background-color: #121212;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(255, 255, 255, 0.4);
+}
+
+/* Titles and values */
+.stats-card h2 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.stats-card p {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #e6e6e6;
+}
+
+/* Stat card variants */
+.stats-card.neutral {
+  background-color: #1f1f1f;
+}
+
+.stats-card.warning {
+  background-color: #7f5f00;
+  color: #fff3cd;
+}
+
+.stats-card.success {
+  background-color: #144d26;
+  color: #d4edda;
+}
+
+.stats-card.info {
+  background-color: #103456;
+  color: #cce5ff;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px #2a6f99; }
+  50% { box-shadow: 0 0 20px #2a6f99; }
+  100% { box-shadow: 0 0 5px #2a6f99; }
+}
+
+.stats-card.info {
+  animation: glow 2.5s ease-in-out infinite;
+}
+
+
+.maintenance-stats-main footer{
+  background-color: rgba(14, 9, 9, 0.1);
+  backdrop-filter: blur(8px);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  position: relative; /* or fixed if you want it always visible */
+  bottom: 0;
+  width: 100%;
+  height: fit-content;
+}

@@ -3,18 +3,31 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { useNavigate } from "react-router-dom";
 
 export default function MaintenanceStats() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState({ name: "Loading...", photo: "" });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserInfo({ name: user.displayName, photo: user.photoURL });
+      } else {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   useEffect(() => {
     async function fetchReports() {
       const snapshot = await getDocs(collection(db, "maintenance_reports"));
-      const list = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setReports(list);
       setLoading(false);
     }
@@ -24,13 +37,18 @@ export default function MaintenanceStats() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("uid");
+    signOut(auth).then(() => navigate("/"));
+  };
+
   const total = reports.length;
-  const open = reports.filter(r => r.status !== "resolved").length;
-  const closed = reports.filter(r => r.status === "resolved").length;
+  const open = reports.filter((r) => r.status !== "resolved").length;
+  const closed = reports.filter((r) => r.status === "resolved").length;
 
   const resolutionTimes = reports
-    .filter(r => r.status === "resolved" && r.createdAt && r.resolvedAt)
-    .map(r => {
+    .filter((r) => r.status === "resolved" && r.createdAt && r.resolvedAt)
+    .map((r) => {
       const created = r.createdAt.toDate();
       const resolved = r.resolvedAt.toDate();
       return (resolved - created) / (1000 * 60 * 60);
@@ -38,20 +56,28 @@ export default function MaintenanceStats() {
 
   const avgTime =
     resolutionTimes.length > 0
-      ? (resolutionTimes.reduce((a, b) => a + b, 0) / resolutionTimes.length).toFixed(2)
+      ? (
+          resolutionTimes.reduce((a, b) => a + b, 0) / resolutionTimes.length
+        ).toFixed(2)
       : "N/A";
 
   function exportToCSV() {
-    const headers = ["Created By", "Message", "Status", "Created At", "Resolved At"];
-    const rows = reports.map(r => [
+    const headers = [
+      "Created By",
+      "Message",
+      "Status",
+      "Created At",
+      "Resolved At",
+    ];
+    const rows = reports.map((r) => [
       r.createdBy,
       r.reportMessage,
       r.status,
       r.createdAt?.toDate().toLocaleString() || "",
-      r.resolvedAt?.toDate().toLocaleString() || ""
+      r.resolvedAt?.toDate().toLocaleString() || "",
     ]);
 
-    const csv = [headers, ...rows].map(e => e.join(",")).join("\n");
+    const csv = [headers, ...rows].map((e) => e.join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -69,7 +95,7 @@ export default function MaintenanceStats() {
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "px",
-      format: [canvas.width, canvas.height]
+      format: [canvas.width, canvas.height],
     });
 
     pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
@@ -77,57 +103,57 @@ export default function MaintenanceStats() {
   }
 
   return (
-    <main style={{ padding: "40px", fontFamily: "Arial", maxWidth: "700px", margin: "auto" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>🛠️ Maintenance Report Stats</h1>
+    <main className="maintenance-stats-main">
+      <header className="stats-header">
+        <img src={userInfo.photo} alt="Profile" className="stats-profile" />
+        <h1 className="maintenance-title"><img src="/icons/maintanence.png"></img>Maintenance Report Stats</h1>
+    
+        <h2 className="stats-username">{userInfo.name}</h2>
+        <p className="stats-subtitle">
+          Below is an overview of facility report analytics and trends.
+        </p>
+      </header>
 
-      <section style={{ textAlign: "center", marginBottom: "20px" }}>
-        <button
-          onClick={exportToCSV}
-          style={{ marginRight: "10px", padding: "10px 20px", cursor: "pointer" }}
-        >
-          📁 Export CSV
+
+      {loading ? (
+        <p className="loading-message">Loading reports...</p>
+      ) : (
+        <section id="stats-section" className="stats-section">
+          <article className="stats-card neutral">
+            <h2>Total Reports:</h2>
+            <p>{total}</p>
+          </article>
+
+          <article className="stats-card warning">
+            <h2>Open Reports:</h2>
+            <p>{open}</p>
+          </article>
+
+          <article className="stats-card success">
+            <h2>Resolved Reports:</h2>
+            <p>{closed}</p>
+          </article>
+
+          <article className="stats-card info">
+            <h2>Average Resolution Time:</h2>
+            <p>{avgTime === "N/A" ? "Not enough data" : `${avgTime} hrs`}</p>
+          </article>
+        </section>
+      )}
+
+      <section className="export-buttons">
+        <button onClick={exportToCSV} className="btn-export-csv">
+          <img src="/icons/export.png" alt="CSV" /> Export CSV
         </button>
-        <button
-          onClick={exportToPDF}
-          style={{ padding: "10px 20px", cursor: "pointer" }}
-        >
-          📄 Export PDF
+        <button onClick={exportToPDF} className="btn-export-pdf">
+          <img src="/icons/pdf.png" alt="PDF" /> Export PDF
         </button>
       </section>
 
-      {loading ? (
-        <p style={{ textAlign: "center" }}>Loading reports...</p>
-      ) : (
-        <section
-          id="stats-section"
-          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-        >
-          <div style={cardStyle}>
-            <strong>Total Reports:</strong> {total}
-          </div>
+      <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+      </footer>
 
-          <div style={{ ...cardStyle, backgroundColor: "#fff3cd" }}>
-            <strong>Open Reports:</strong> {open}
-          </div>
-
-          <div style={{ ...cardStyle, backgroundColor: "#d4edda" }}>
-            <strong>Resolved Reports:</strong> {closed}
-          </div>
-
-          <div style={{ ...cardStyle, backgroundColor: "#cce5ff" }}>
-            <strong>Average Resolution Time:</strong>{" "}
-            {avgTime === "N/A" ? "Not enough data" : `${avgTime} hrs`}
-          </div>
-        </section>
-      )}
     </main>
   );
 }
-
-const cardStyle = {
-  backgroundColor: "#f9f9f9",
-  borderRadius: "10px",
-  padding: "20px",
-  boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-  fontSize: "18px"
-};

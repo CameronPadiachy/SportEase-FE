@@ -4,6 +4,7 @@ import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 export default function StaffUM() {
+    
   const [residents, setActiveUsers] = useState([]);
   const [revoked, setRevokedUsers] = useState([]);
   const navigate = useNavigate();
@@ -48,9 +49,10 @@ export default function StaffUM() {
 
   return (
     <main className="staff-container">
-      <header className="staff-heading">
-        <h1>Staff User Management</h1>
-      </header>
+       <header className="staff-header">
+          <h1 className="staff-title">Staff Dashboard</h1>
+          <p className="staff-subtitle">You can revoke and grant access to users here.</p>
+        </header>
 
       <section className="user-management-container">
 
@@ -81,6 +83,9 @@ export default function StaffUM() {
       </section>
 
       <button className="btn-back" onClick={() => navigate("/staff")}>← Back to Staff Home</button>
+    <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+      </footer>
     </main>
   );
 }
