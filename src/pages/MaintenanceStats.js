@@ -3,7 +3,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 
@@ -102,7 +101,7 @@ export default function MaintenanceStats() {
     <main className="maintenance-stats-main">
       <header className="stats-header">
         <img src={userInfo.photo} alt="Profile" className="stats-profile" />
-        <h1 className="maintenance-title"><img src="/icons/maintanence.png"></img>Maintenance Report Stats</h1>
+        <h1 className="maintenance-title"><img src="/icons/maintanence.png" alt=""></img>Maintenance Report Stats</h1>
     
         <h2 className="stats-username">{userInfo.name}</h2>
         <p className="stats-subtitle">
