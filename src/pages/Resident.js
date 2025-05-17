@@ -36,6 +36,15 @@ export default function Resident() {
 
         setUserInfo({ name, photo });
 
+        // ✅ Trigger weather check once per login
+        try {
+          await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/weather/check', {
+            method: 'POST'
+          });
+        } catch (err) {
+          console.error('Weather check failed:', err);
+        }
+
         const fetchNotifications = async (uid) => {
           try {
             const res = await fetch(`https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/notif/${uid}`);
@@ -90,6 +99,7 @@ export default function Resident() {
     localStorage.removeItem('uid');  
     signOut(auth).then(() => navigate('/'));
   };
+
   const goToFacility = (facilityId) => {
     localStorage.setItem('selectedFacility', facilityId);
     navigate('/booking');
@@ -117,7 +127,6 @@ export default function Resident() {
 
   return (
     <main className="resident-container">
-      {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={toggleSidebar}>×</button>
         <ul>
@@ -130,7 +139,6 @@ export default function Resident() {
         <button className="logout-btn" onClick={handleLogout}>Log Out</button>
       </aside>
 
-      {/* Header */}
       <header className="resident-header">
         <button className="sidebar-toggle" onClick={toggleSidebar}>☰</button>
         <img className="resident-profile" src={userInfo.photo} alt="User Profile" />
@@ -145,7 +153,6 @@ export default function Resident() {
         </nav>
       </header>
 
-      {/* Booking Section */}
       <section className="resident-booking-section" id="bookings">
         <article className="resident-column" onClick={() => goToFacility(2)}>
           <img className="resident-image" src="/bookpadel.png" alt="Padel" />
@@ -161,7 +168,6 @@ export default function Resident() {
         </article>
       </section>
 
-      {/* Announcements Section */}
       <section id="announcements" className="resident-announcements-section">
         <h2>Announcements</h2>
         <section className="announcement-block">
@@ -175,7 +181,6 @@ export default function Resident() {
         </section>
       </section>
 
-      {/* Notifications Section */}
       <section id="notifications" className="resident-notifications-section">
         <h2>Notifications</h2>
         <section className="notification-block">
@@ -189,7 +194,6 @@ export default function Resident() {
         </section>
       </section>
 
-      {/* Calendar Section */}
       <section id="calendar" className="resident-calendar-section">
         <FullCalendar
           plugins={[dayGridPlugin]}
