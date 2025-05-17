@@ -37,10 +37,6 @@ export default function MaintenanceStats() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("uid");
-    signOut(auth).then(() => navigate("/"));
-  };
 
   const total = reports.length;
   const open = reports.filter((r) => r.status !== "resolved").length;

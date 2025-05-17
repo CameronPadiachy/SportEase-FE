@@ -76,7 +76,7 @@ export default function StaffReports() {
   return (
     <main className="staff-reports-main">
       <h1 className="staff-reports-title">
-        <img src="/icons/maintanence.png"></img> Manage Maintenance Reports
+        <img src="/icons/maintanence.png" alt=""></img> Manage Maintenance Reports
       </h1>
 
       <section>
@@ -86,11 +86,11 @@ export default function StaffReports() {
           <ul className="report-list">
             {reports.map((report) => (
               <li key={report.id} className="report-card">
-                <p><strong><img src="/icons/person.png"></img> Reported By:</strong> {report.createdBy}</p>
-                <p><strong><img src="/icons/report.png"></img> Issue:</strong> {report.reportMessage}</p>
-                <p><strong><img src="/icons/calendar.png"></img> Date:</strong> {report.createdAt?.toDate().toLocaleString()}</p>
+                <p><strong><img src="/icons/person.png" alt=""></img> Reported By:</strong> {report.createdBy}</p>
+                <p><strong><img src="/icons/report.png" alt=""></img> Issue:</strong> {report.reportMessage}</p>
+                <p><strong><img src="/icons/calendar.png" alt=""></img> Date:</strong> {report.createdAt?.toDate().toLocaleString()}</p>
                 <p>
-                  <strong><img src="/icons/arrow.png"></img> Status:</strong>{" "}
+                  <strong><img src="/icons/arrow.png" alt=""></img> Status:</strong>{" "}
                   <output className={`status-text ${report.status.replace(" ", "-")}`}>
                     {report.status}
                   </output>
@@ -98,7 +98,7 @@ export default function StaffReports() {
 
                 {report.feedback && (
                   <p className="feedback-box">
-                    <strong><img src="/icons/feedback.png"></img> Current Feedback:</strong> {report.feedback}
+                    <strong><img src="/icons/feedback.png" alt=""></img> Current Feedback:</strong> {report.feedback}
                   </p>
                 )}
 
@@ -108,7 +108,7 @@ export default function StaffReports() {
                   handleStatusChange(report.id, selectedStatus);
                 }}>
                   <label>
-                    <strong><img src="/icons/edit.png"></img> Change Status:</strong>{" "}
+                    <strong><img src="/icons/edit.png" alt=""></img> Change Status:</strong>{" "}
                     <select name="status" defaultValue={report.status} className="status-dropdown">
                       <option value="submitted">Submitted</option>
                       <option value="in progress">In Progress</option>
@@ -119,7 +119,7 @@ export default function StaffReports() {
                 </form>
 
                 <form onSubmit={(e) => handleFeedbackSubmit(e, report.id)}>
-                  <label><strong><img src="/icons/comment.png"></img>Add Feedback:</strong></label>
+                  <label><strong><img src="/icons/comment.png" alt=""></img>Add Feedback:</strong></label>
                   <textarea
                     value={feedbackInputs[report.id] || ""}
                     onChange={(e) => handleFeedbackChange(report.id, e.target.value)}
@@ -133,7 +133,7 @@ export default function StaffReports() {
                   onClick={() => handleDeleteReport(report.id)}
                   className="btn-delete"
                 >
-                  <img src="/icons/bin.png"></img> Delete Report
+                  <img src="/icons/bin.png" alt=""></img> Delete Report
                 </button>
               </li>
             ))}
