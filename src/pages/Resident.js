@@ -37,7 +37,7 @@ export default function Resident() {
 
         setUserInfo({ name, photo });
 
-        //  Trigger weather check once per login
+        //  Trigger weather check after login
         try {
           await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/weather/check', {
             method: 'POST'
