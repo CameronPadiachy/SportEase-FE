@@ -12,16 +12,6 @@ export default function MaintenanceStats() {
   const [userInfo, setUserInfo] = useState({ name: "Loading...", photo: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserInfo({ name: user.displayName, photo: user.photoURL });
-      } else {
-        navigate("/");
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
 
   useEffect(() => {
     async function fetchReports() {
