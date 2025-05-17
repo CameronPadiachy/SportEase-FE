@@ -3,15 +3,10 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { auth } from "../firebase/config";
-import { useNavigate } from "react-router-dom";
 
 export default function MaintenanceStats() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState({ name: "Loading...", photo: "" });
-  const navigate = useNavigate();
-
 
   useEffect(() => {
     async function fetchReports() {
@@ -25,7 +20,6 @@ export default function MaintenanceStats() {
     const interval = setInterval(fetchReports, 2000);
     return () => clearInterval(interval);
   }, []);
-
 
   const total = reports.length;
   const open = reports.filter((r) => r.status !== "resolved").length;
@@ -90,15 +84,14 @@ export default function MaintenanceStats() {
   return (
     <main className="maintenance-stats-main">
       <header className="stats-header">
-        <img src={userInfo.photo} alt="Profile" className="stats-profile" />
-        <h1 className="maintenance-title"><img src="/icons/maintanence.png" alt=""></img>Maintenance Report Stats</h1>
-    
-        <h2 className="stats-username">{userInfo.name}</h2>
+        <h1 className="maintenance-title">
+          <img src="/icons/maintanence.png" alt="Maintenance Icon" />
+          Maintenance Report Stats
+        </h1>
         <p className="stats-subtitle">
           Below is an overview of facility report analytics and trends.
         </p>
       </header>
-
 
       {loading ? (
         <p className="loading-message">Loading reports...</p>
@@ -128,17 +121,16 @@ export default function MaintenanceStats() {
 
       <section className="export-buttons">
         <button onClick={exportToCSV} className="btn-export-csv">
-          <img src="/icons/export.png" alt="CSV" /> Export CSV
+          <img src="/icons/export.png" alt="CSV Icon" /> Export CSV
         </button>
         <button onClick={exportToPDF} className="btn-export-pdf">
-          <img src="/icons/pdf.png" alt="PDF" /> Export PDF
+          <img src="/icons/pdf.png" alt="PDF Icon" /> Export PDF
         </button>
       </section>
 
       <footer>
         <p>&copy; 2025 SportEase. All rights reserved.</p>
       </footer>
-
     </main>
   );
 }
