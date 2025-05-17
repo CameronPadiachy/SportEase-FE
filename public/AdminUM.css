@@ -1,16 +1,26 @@
 .userM-page .admin-container {
-    padding: 40px;
-    font-family: Arial;
-    background-color: rgba(62, 42, 4, 0.604);
-    text-align: center;
-    min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at bottom left, #ffff03 0%, #000000 60%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding-top: 0; 
+  position: relative;
+  overflow-x: hidden;
   }
   
   .userM-page .admin-heading {
-    font-size: 30px;
-    color: rgb(27, 95, 32);
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgb(255, 255, 255);
+ background-color:  rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 40px 20px 60px;
+  position: relative;
+  text-align: center;
+  text-shadow: #ffff03;
   }
   
   .userM-page .admin-subheading {
@@ -18,14 +28,19 @@
     color: #ffffff;
     margin-bottom: 10px;
   }
+  .adminUM-page .admin-subtitle {
+  font-size: 20px;
+  margin-top: 10px;
+  text-shadow: 1px 2px 3px #ffff03;
+}
   
   .userM-page .admin-user-list {
     list-style-type: none;
     padding: 0;
     margin-bottom: 30px;
-    background-color: rgba(95, 40, 3, 0.694);
+    background-color: #cccc003c;
     border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(252, 252, 252, 0.852);
+    box-shadow: 0 4px 8px #ffffff;
   }
   
   .userM-page .admin-user-item {
@@ -79,26 +94,28 @@
   }
   
   .userM-page .btn-back {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #1b5e20;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.852);
+    position: absolute;
+  top: 30px;       /* Distance from the top */
+  left: 30px;      /* Distance from the left (you can change this) */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: rgba(147, 143, 143, 0.555);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
   }
   
   .userM-page .btn-back:hover {
-    background-color: rgba(95, 40, 3, 0.5);
+    background-color: #0e0e0b;
   }
   
   /* NEW: Green semi-transparent background for user management container */
   .userM-page .user-management-container {
     display: flex;
-    justify-content: space-between; /* Spread the sections horizontally */
+    justify-content: space-between;
     gap: 20px;
-    background-color: rgba(62, 42, 4, 0); /* Green with transparency */
     padding: 200px;
     border-radius: 15px;
     
@@ -106,13 +123,14 @@
   
   /* NEW: Make all the brown blocks the same size and much bigger */
   .userM-page .user-management-section {
-    flex: 1; /* Allow all sections to take equal width */
+    flex: 1; 
     text-align: center;
-    background-color: #1b5e1f70; /* Keep the same brown background */
+    background-color: rgba(52, 52, 54, 0.468); 
     border-radius: 15px;
-    padding: 30px;  /* Increased padding for larger blocks */
-    min-height: 300px; /* Minimum height for the sections */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Slight shadow for better visual separation */
+    padding: 30px;  
+    min-height: 300px; 
+    box-shadow: 0 4px 8px #ffffff;  
+    backdrop-filter: blur(10px); 
   }
   
   /* Optional: Make the sections a little more prominent */
@@ -127,3 +145,15 @@
     overflow-y: auto;  /* Add scroll if content overflows */
   }
   
+  .admin-container footer {
+  background-color: rgba(244, 244, 244, 0.1);
+  backdrop-filter: blur(8px);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  position: relative; /* or fixed if you want it always visible */
+  bottom: 0;
+  width: 100%;
+  height: fit-content;
+}

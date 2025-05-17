@@ -68,6 +68,7 @@ export default function AdminUM() {
     <main className="admin-container">
       <header className="admin-heading">
         <h1>Admin User Management</h1>
+        <p className="admin-subtitle">You can revoke and grant access to users here.</p>
       </header>
 
       <section className="user-management-container">
@@ -110,6 +111,9 @@ export default function AdminUM() {
       </section>
 
       <button className="btn-back" onClick={() => navigate("/admin")}>← Back to Admin Home</button>
+      <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+      </footer>
     </main>
   );
 }

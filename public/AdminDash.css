@@ -13,7 +13,7 @@ body {
 
 .admin-page .admin-container {
   font-family: Arial, sans-serif;
-  background-image: url("track.jpg");
+  background-image: url("/images/adminbackground.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -27,33 +27,33 @@ body {
   overflow-x: hidden;
 }
 
-/* Full-width green header */
+
 .admin-page header.admin-header {
-  background-color: #01280797;
+  background-color:  rgba(255, 255, 255, 0.1);
   width: 100%;
   padding: 40px 20px 60px;
   position: relative;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px #ffff03;
 }
 
 .admin-page .admin-title {
   font-size: 48px;
   margin-bottom: 10px;
-  text-shadow: 2px 2px 4px black;
+  text-shadow: 2px 2px 4px #ffff03;
 }
 
 .admin-page .admin-username {
   font-size: 36px;
   font-weight: normal;
   margin: 10px 0;
-  text-shadow: 1px 1px 3px black;
+  text-shadow: 1px 1px 3px #ffff03;
 }
 
 .admin-page .admin-subtitle {
   font-size: 20px;
   margin-top: 10px;
-  text-shadow: 1px 1px 3px black;
+  text-shadow: 1px 1px 3px #ffff03;
 }
 
 /* Profile image stays top-right */
@@ -74,12 +74,13 @@ body {
   justify-content: center;
   gap: 50px;
   padding: 150px 20px 20px;
+
 }
 
 
 .admin-page .admin-card {
-  background-color: #01280774;
-  border-radius: 10px;
+ background-color: rgba(255, 255, 255, 0.1);
+ border-radius: 10px;
   padding: 20px;
   width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -91,9 +92,10 @@ body {
   align-items: center;
 }
 
+
 .admin-page .admin-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 12px #ffff03;
 }
 
 .admin-page .admin-card-title {
@@ -102,7 +104,7 @@ body {
   color: white;
   margin-bottom: 10px;
   padding: 10px 0;
-  background-color: #1b5e20;
+  background-color: #cccc00;
   border-radius: 5px;
   cursor: pointer;
   border: none;
@@ -126,7 +128,7 @@ body {
   margin: 30px auto 60px;
   padding: 12px 24px;
   font-size: 20px;
-  background-color: #33691e;
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
   border: none;
   border-radius: 5px;
@@ -136,56 +138,9 @@ body {
 }
 
 .admin-page .admin-logout:hover {
-  background-color: #1b5e20;
+  background-color: #cccc00;
 }
 
-
-@media (max-width: 768px) {
-  .admin-page .admin-container {
-    background-position: top center;
-  }
-
-  .admin-page header.admin-header {
-    padding: 20px 10px 40px;
-  }
-
-  .admin-page .admin-title {
-    font-size: 28px;
-  }
-
-  .admin-page .admin-username {
-    font-size: 18px;
-  }
-
-  .admin-page .admin-subtitle {
-    font-size: 14px;
-  }
-
-  .admin-page .admin-profile {
-    width: 50px;
-    height: 50px;
-    top: 10px;
-    right: 10px;
-  }
-
-  .admin-page .admin-card {
-    width: 90%;
-    margin: 10px auto;
-  }
-
-  .admin-page .admin-card-title {
-    font-size: 16px;
-  }
-
-  .admin-page .admin-card-description {
-    font-size: 12px;
-  }
-
-  .admin-page .admin-logout {
-    width: 90%;
-    font-size: 14px;
-  }
-}
 
 .admin-page .announcement-section {
   margin-top: 80px;
@@ -198,34 +153,35 @@ body {
   font-size: 32px;
   margin-bottom: 20px;
   color: white;
-  text-shadow: 1px 1px 4px black;
+  text-shadow: 1px 1px 4px #ffff03;
 }
 
 .admin-page .announcement-input {
   width: 150%;
   max-width: 1500px;
   min-height: 250px;
-  color: #1b5e20;
-  background-color: #ffffff70;
+  color: #ffff03;
+  background-color: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 10px;
   padding: 15px;
   font-size: 20px;
   font-family: Arial, sans-serif;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.3);
   resize: vertical;
   outline: none;
+  backdrop-filter: blur(10px);
 }
 .admin-page .announcement-input::placeholder {
-  color:#1b5e20 ; 
+  color:rgb(255, 255, 255) ; 
   opacity: 1;  
 }
 .admin-page .announcement-post-btn {
   margin-top: 20px;
   padding: 12px 30px;
   font-size: 18px;
-  background-color: #ffffff70;
-  color: #1b5e20;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -233,20 +189,21 @@ body {
 }
 
 .admin-page .announcement-post-btn:hover {
-  background-color: #1b5e20;
-  color: white;
+  background-color: #cccc00;
+  color: rgb(255, 255, 255);
 }
 
 /* Create Event Section */
 .create-event-section {
   margin-top: 100px;
   padding: 20px;
-  background-color: #bec1be97;
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 50%;
-  margin-left: 480px;
-
+  box-shadow: 0 4px 8px #ffff03;
+  width: 60%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .create-event-section h2 {
@@ -258,22 +215,23 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  color: #1b5e20;
+  color: #cccc00;
   font-weight: bold;
 }
 
 .create-event-section input, .create-event-section select, .create-event-section textarea {
+  background-color: #00000085;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 5px;
-  color: #1b5e20;
+  color: #ffffff;
 }
 
 .create-event-section button {
   padding: 12px 20px;
   font-size: 18px;
-  background-color: #33691e;
+  background-color: rgba(132, 126, 126, 0.463);
   color: white;
   border: none;
   border-radius: 5px;
@@ -281,5 +239,57 @@ body {
 }
 
 .create-event-section button:hover {
-  background-color: #1f632e;
+  background-color: #cccc00;
+}
+
+
+
+.admin-container footer {
+  background-color: rgba(16, 14, 14, 0.1);
+  backdrop-filter: blur(8px);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  margin-top: auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .admin-page .admin-title {
+    font-size: 28px;
+  }
+
+  .admin-page .admin-username {
+    font-size: 20px;
+  }
+
+  .admin-page .admin-subtitle {
+    font-size: 14px;
+  }
+
+  .admin-page .admin-profile {
+    width: 50px;
+    height: 50px;
+    top: 15px;
+    right: 15px;
+  }
+
+  .admin-page .admin-cards {
+    padding: 100px 10px 20px;
+    gap: 20px;
+  }
+
+  .admin-page .admin-card {
+    width: 90%;
+  }
+
+  .create-event-section {
+  width: 90%;
+  padding: 15px;
+}
+
+  .admin-page .announcement-input {
+    width: 100%;
+  }
 }

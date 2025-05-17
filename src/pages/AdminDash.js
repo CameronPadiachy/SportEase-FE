@@ -249,6 +249,10 @@ export default function AdminDash() {
       <button onClick={handleLogout} className="admin-logout">
         Log Out
       </button>
+
+      <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+      </footer>
     </main>
   );
 }

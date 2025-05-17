@@ -6,8 +6,12 @@
   <link rel="stylesheet" href="Admin1.css">
 </head>
 
-<body>
-  <h1 style="text-align: center;">Manage Booking Requests</h1>
+<body class="admin-page">
+  <!-- Admin Dashboard Header -->
+  <header class="admin-header">
+    <h1 class="admin-title">Manage Booking Requests</h1>
+    <p class="admin-subtitle">You can manage booking requests being made by users.</p>
+  </header>
 
   <main>
     <table>
@@ -22,8 +26,7 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody id="booking-table-body">
-      </tbody>
+      <tbody id="booking-table-body"></tbody>
     </table>
   </main>
 
@@ -36,7 +39,6 @@
         const tbody = document.getElementById('booking-table-body');
         tbody.innerHTML = '';
 
-        // Filter only pending bookings (status === null)
         const pendingBookings = bookings.filter(b => b.status === null);
 
         pendingBookings.forEach(booking => {
@@ -94,6 +96,5 @@
       `;
     }
   </script>
-
 </body>
 </html>
