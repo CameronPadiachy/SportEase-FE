@@ -38,12 +38,12 @@ export default function Resident() {
 
         try {
           await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/weather/check', {
-            method: 'POST'
+            method: 'POST',
           });
+          console.log(' Weather check triggered');
         } catch (err) {
-          console.error('Weather check failed:', err);
+          console.error(' Weather check failed:', err);
         }
-
         const fetchNotifications = async (uid) => {
           try {
             const res = await fetch(`https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/notif/${uid}`);
