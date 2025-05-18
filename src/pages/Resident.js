@@ -3,8 +3,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
+
 import FacilityStats from './facilityStats';
 
 export default function Resident() {
@@ -37,7 +36,6 @@ export default function Resident() {
 
         setUserInfo({ name, photo });
 
-        //  Trigger weather check after login
         try {
           await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/weather/check', {
             method: 'POST'
@@ -110,7 +108,9 @@ export default function Resident() {
     setActiveTab(tab);
     const section = document.getElementById(tab.toLowerCase());
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      const offset = window.innerHeight / 2 - section.offsetHeight / 2;
+      const topPos = section.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: topPos, behavior: 'smooth' });
     }
   };
 
@@ -146,27 +146,27 @@ export default function Resident() {
         <img className="resident-profile" src={userInfo.photo} alt="User Profile" />
         <h1 className="resident-username">{userInfo.name}</h1>
         <nav className="resident-tabs">
-          <ul style={{ display: 'flex', justifyContent: 'center' }}>
-            <li onClick={() => handleTabClick('Bookings')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Bookings' ? 'bold' : 'normal' }}>My Bookings</li>
-            <li onClick={() => handleTabClick('Announcements')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Announcements' ? 'bold' : 'normal' }}>Announcements</li>
-            <li onClick={() => handleTabClick('Notifications')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Notifications' ? 'bold' : 'normal' }}>Notifications</li>
-            <li onClick={() => handleTabClick('Reports')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'Reports' ? 'bold' : 'normal' }}>Reports</li>
-            <li onClick={() => handleTabClick('FacilityTrends')} style={{ cursor: 'pointer', padding: '0 20px', fontWeight: activeTab === 'FacilityTrends' ? 'bold' : 'normal' }}>Facility Trends</li>
+          <ul>
+            <li><a href="#bookings">Bookings</a></li>
+            <li><a href="#bookings">Facilities</a></li>
+            <li><a href="#announcements">Announcements</a></li>
+            <li><a href="#notifications">Notifications</a></li>
+            <li><a href="#facilitytrends">Trends</a></li>
           </ul>
         </nav>
       </header>
 
       <section className="resident-booking-section" id="bookings">
         <article className="resident-column" onClick={() => goToFacility(2)}>
-          <img className="resident-image" src="/bookpadel.png" alt="Padel" />
+          <img className="resident-image" src="/images/padel.jpeg" alt="Padel" />
           <p className="hover-description">Get your paddle on! Book now and enjoy a fun match with friends!</p>
         </article>
         <article className="resident-column" onClick={() => goToFacility(3)}>
-          <img className="resident-image" src="/booksoccer.png" alt="Soccer" />
+          <img className="resident-image" src="/images/soccer.jpeg" alt="Soccer" />
           <p className="hover-description">Goal time! Book your soccer field and get ready to score!</p>
         </article>
         <article className="resident-column" onClick={() => goToFacility(1)}>
-          <img className="resident-image" src="/booktennis.png" alt="Tennis" />
+          <img className="resident-image" src="/images/racket.jpeg" alt="Tennis" />
           <p className="hover-description">Serve it up! Book your tennis court and smash the competition!</p>
         </article>
       </section>
@@ -197,18 +197,23 @@ export default function Resident() {
         </section>
       </section>
 
-      <section id="calendar" className="resident-calendar-section">
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          events={events}
-        />
-      </section>
-
-      {/* Facility Trend Section */}
       <section id="facilitytrends" className="facility-trend-section">
         <FacilityStats />
       </section>
+
+      <footer className="footer-bar">
+        <section className="footer-left">
+          <p>&copy; 2025 SportEase. All rights reserved.</p>
+        </section>
+        <section className="footer-right">
+          <h2>Contact</h2>
+          <ul>
+            <li>support@sportease.com</li>
+            <li>Call 123-456-7890</li>
+            <li>Talk to our support staff – we’re always here to help!</li>
+          </ul>
+        </section>
+      </footer>
     </main>
   );
 }
