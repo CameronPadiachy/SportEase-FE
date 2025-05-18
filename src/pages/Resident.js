@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth, db } from '../firebase/config';
+import { auth } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 
 import FacilityStats from './facilityStats';
@@ -19,17 +19,6 @@ export default function Resident() {
       if (user) {
         const name = user.displayName;
         const photo = user.photoURL;
-
-        try {
-          const userRef = doc(db, 'users', user.uid);
-          const docSnap = await getDoc(userRef);
-          if (docSnap.exists()) {
-            const role = docSnap.data().role;
-            console.log('User role:', role);
-          }
-        } catch (err) {
-          console.error('Error fetching user data:', err);
-        }
 
         setUserInfo({ name, photo });
 
@@ -60,8 +49,6 @@ export default function Resident() {
         const intervalId = setInterval(() => {
           fetchNotifications(user.uid);
         }, 30000);
-
-        // Removed fetchEvents call and setEvents since events state wasn't used
 
         return () => {
           document.body.classList.remove('resident-page');
