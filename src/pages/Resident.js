@@ -9,8 +9,6 @@ import FacilityStats from './facilityStats';
 export default function Resident() {
   const [userInfo, setUserInfo] = useState({ name: 'Loading...', photo: '' });
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Bookings');
-  const [events, setEvents] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const navigate = useNavigate();
@@ -40,10 +38,11 @@ export default function Resident() {
           await fetch('https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/weather/check', {
             method: 'POST',
           });
-          console.log(' Weather check triggered');
+          console.log('Weather check triggered');
         } catch (err) {
-          console.error(' Weather check failed:', err);
+          console.error('Weather check failed:', err);
         }
+
         const fetchNotifications = async (uid) => {
           try {
             const res = await fetch(`https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/notif/${uid}`);
@@ -63,25 +62,7 @@ export default function Resident() {
           fetchNotifications(user.uid);
         }, 30000);
 
-        const fetchEvents = async () => {
-          try {
-            const eventsCollection = collection(db, 'events');
-            const querySnapshot = await getDocs(eventsCollection);
-            const eventsData = querySnapshot.docs.map(doc => doc.data());
-
-            const formattedEvents = eventsData.map(event => ({
-              title: event.title,
-              date: event.date,
-              description: event.description,
-              facility: event.facility,
-            }));
-            setEvents(formattedEvents);
-          } catch (err) {
-            console.error('Failed to fetch events:', err);
-          }
-        };
-
-        fetchEvents();
+        // Removed fetchEvents call and setEvents since events state wasn't used
 
         return () => {
           document.body.classList.remove('resident-page');
@@ -95,23 +76,13 @@ export default function Resident() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('uid');  
+    localStorage.removeItem('uid');
     signOut(auth).then(() => navigate('/'));
   };
 
   const goToFacility = (facilityId) => {
     localStorage.setItem('selectedFacility', facilityId);
     navigate('/booking');
-  };
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    const section = document.getElementById(tab.toLowerCase());
-    if (section) {
-      const offset = window.innerHeight / 2 - section.offsetHeight / 2;
-      const topPos = section.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: topPos, behavior: 'smooth' });
-    }
   };
 
   const toggleSidebar = () => {
@@ -131,10 +102,10 @@ export default function Resident() {
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={toggleSidebar}>×</button>
         <ul>
-          <li onClick={() => handleTabClick('Bookings')}>My Bookings</li>
-          <li onClick={() => handleTabClick('Announcements')}>Announcements</li>
-          <li onClick={() => handleTabClick('Notifications')}>Notifications</li>
-          <li onClick={() => handleTabClick('FacilityTrends')}>Facility Trends</li>
+          <li onClick={() => window.location.hash = '#bookings'}>My Bookings</li>
+          <li onClick={() => window.location.hash = '#announcements'}>Announcements</li>
+          <li onClick={() => window.location.hash = '#notifications'}>Notifications</li>
+          <li onClick={() => window.location.hash = '#facilitytrends'}>Facility Trends</li>
           <li onClick={navigateToEvents}>Join Events</li>
           <li onClick={navigateToReports}>Reports</li>
         </ul>
