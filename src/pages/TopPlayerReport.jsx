@@ -41,7 +41,7 @@ export default function TopPlayersReport({ sportId }) {
 
         // Filter and group bookings by user
         const userBookings = bookings.reduce((acc, booking) => {
-          if (booking.facility_id == sportId) {
+          if (booking.facility_id === sportId) {
             acc[booking.uid] = (acc[booking.user_id] || 0) + 1;
           }
           return acc;
