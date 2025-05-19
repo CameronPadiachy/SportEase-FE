@@ -3,13 +3,11 @@ import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, onSnapshot, collection } from "firebase/firestore";
 
 // Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// Define facility map as a constant outside the component
 const FACILITY_MAP = Object.freeze({
   1: { name: "Padel", emoji: "🎾" },
   2: { name: "Soccer", emoji: "⚽" },
@@ -24,70 +22,72 @@ export default function TopPlayersReport({ sportId }) {
   const chartRef = useRef();
 
   useEffect(() => {
-    const auth = getAuth();
     const db = getFirestore();
+    let unsubscribeBookings = () => {};
 
     async function fetchData() {
       try {
-        // Set sport name
         if (FACILITY_MAP[sportId]) {
           setSportName(`${FACILITY_MAP[sportId].emoji} ${FACILITY_MAP[sportId].name}`);
         }
 
-        // Fetch all bookings
-        const resp = await fetch("https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/booking");
-        if (!resp.ok) throw new Error('Failed to fetch bookings');
-        const bookings = await resp.json();
+        // Real-time bookings listener
+        unsubscribeBookings = onSnapshot(
+          collection(db, "bookings"),
+          async (snapshot) => {
+            const bookings = snapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
 
-        // Filter and group bookings by user with strict equality
+            processBookings(bookings);
+          },
+          (error) => {
+            console.error("Error listening to bookings:", error);
+            setError("Failed to load real-time booking data");
+          }
+        );
+
+        // Initial fetch from API
+        const response = await fetch("https://sporteasebe-hka9fng7gaaue7c2.canadacentral-01.azurewebsites.net/api/booking");
+        if (!response.ok) throw new Error('Failed to fetch bookings');
+        const initialBookings = await response.json();
+        processBookings(initialBookings);
+
+      } catch (err) {
+        console.error("Error in fetchData: ", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    }
+
+    async function processBookings(bookings) {
+      try {
         const userBookings = bookings.reduce((acc, booking) => {
           if (Number(booking.facility_id) === Number(sportId)) {
-            acc[booking.uid] = (acc[booking.user_id] || 0) + 1;
+            acc[booking.uid] = (acc[booking.uid] || 0) + 1;
           }
           return acc;
         }, {});
 
-        // Sort and get top 5 players
         const sortedPlayers = Object.entries(userBookings)
           .map(([userId, count]) => ({ userId, count }))
           .sort((a, b) => b.count - a.count)
           .slice(0, 5);
 
-        // Enhanced user data fetching with multiple fallbacks
         const playersWithDetails = await Promise.all(
           sortedPlayers.map(async (player) => {
             try {
-              // Try Firebase Auth first
-              try {
-                const authUser = await auth.getUser(player.userId);
-                if (authUser) {
-                  return {
-                    ...player,
-                    name: authUser.displayName || 
-                         authUser.email?.split('@')[0] || 
-                         `Player ${player.userId.slice(0, 4)}`,
-                    photoURL: authUser.photoURL || null
-                  };
-                }
-              } catch (authError) {
-                console.log(`User ${player.userId} not found in Auth, checking Firestore`);
-              }
-
-              // Fallback to Firestore
               const userDoc = await getDoc(doc(db, "users", player.userId));
               if (userDoc.exists()) {
                 const userData = userDoc.data();
                 return {
                   ...player,
-                  name: userData.displayName || 
-                       userData.name || 
-                       userData.email?.split('@')[0] || 
-                       `Player ${player.userId.slice(0, 4)}`,
+                  name: userData.displayName || userData.name || userData.email?.split('@')[0] || `Player ${player.userId.slice(0, 4)}`,
                   photoURL: userData.photoURL || null
                 };
               }
 
-              // Final fallback
               return {
                 ...player,
                 name: `Player ${player.userId.slice(0, 4)}`,
@@ -107,28 +107,26 @@ export default function TopPlayersReport({ sportId }) {
         setTopPlayers(playersWithDetails);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data: ", err);
-        setError(err.message);
+        console.error("Error processing bookings: ", err);
+        setError("Failed to process booking data");
         setLoading(false);
       }
     }
 
     fetchData();
-  }, [sportId]); // FACILITY_MAP is now a constant outside the component
 
-  // ... rest of your component remains exactly the same
-  // Prepare data for the chart
+    return () => {
+      unsubscribeBookings();
+    };
+  }, [sportId]);
+
   const chartData = {
     labels: topPlayers.map(player => player.name),
     datasets: [{
       label: "Bookings",
       data: topPlayers.map(player => player.count),
       backgroundColor: [
-        "#36A2EB", // 1st place
-        "#4BC0C0", // 2nd place
-        "#FFCE56", // 3rd place
-        "#9966FF", // 4th place
-        "#FF9F40"  // 5th place
+        "#36A2EB", "#4BC0C0", "#FFCE56", "#9966FF", "#FF9F40"
       ]
     }]
   };
@@ -152,7 +150,6 @@ export default function TopPlayersReport({ sportId }) {
 
   const exportToPDF = () => {
     if (!chartRef.current) return;
-
     html2canvas(chartRef.current).then(canvas => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
@@ -173,29 +170,10 @@ export default function TopPlayersReport({ sportId }) {
       )}
 
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <button 
-          onClick={exportToCSV} 
-          style={{ 
-            padding: "10px 20px", 
-            cursor: "pointer", 
-            marginRight: "10px",
-            backgroundColor: "#f0f0f0",
-            border: "1px solid #ddd",
-            borderRadius: "4px"
-          }}
-        >
+        <button onClick={exportToCSV} style={{ padding: "10px 20px", cursor: "pointer", marginRight: "10px", backgroundColor: "#f0f0f0", border: "1px solid #ddd", borderRadius: "4px" }}>
           📁 Export CSV
         </button>
-        <button 
-          onClick={exportToPDF} 
-          style={{ 
-            padding: "10px 20px", 
-            cursor: "pointer",
-            backgroundColor: "#f0f0f0",
-            border: "1px solid #ddd",
-            borderRadius: "4px"
-          }}
-        >
+        <button onClick={exportToPDF} style={{ padding: "10px 20px", cursor: "pointer", backgroundColor: "#f0f0f0", border: "1px solid #ddd", borderRadius: "4px" }}>
           🖨️ Export PDF
         </button>
       </div>
@@ -208,7 +186,7 @@ export default function TopPlayersReport({ sportId }) {
         <>
           <section style={{ marginBottom: "40px" }} ref={chartRef}>
             <Bar 
-              data={chartData} 
+              data={chartData}
               options={{
                 responsive: true,
                 plugins: {
@@ -217,9 +195,7 @@ export default function TopPlayersReport({ sportId }) {
                     text: `Top Players by Bookings (${sportName})`,
                     font: { size: 16 }
                   },
-                  legend: {
-                    display: false
-                  }
+                  legend: { display: false }
                 },
                 scales: {
                   y: {
@@ -236,61 +212,23 @@ export default function TopPlayersReport({ sportId }) {
 
           <section style={{ background: "#fff", borderRadius: "8px", padding: "20px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
             <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Leaderboard</h2>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: "50px 1fr 80px 50px", 
-              gap: "10px", 
-              alignItems: "center",
-              marginBottom: "10px",
-              padding: "0 20px",
-              fontWeight: "bold",
-              borderBottom: "1px solid #eee"
-            }}>
+            <div style={{ display: "grid", gridTemplateColumns: "50px 1fr 80px 50px", gap: "10px", alignItems: "center", marginBottom: "10px", padding: "0 20px", fontWeight: "bold", borderBottom: "1px solid #eee" }}>
               <div>Rank</div>
               <div>Player</div>
               <div style={{ textAlign: "right" }}>Bookings</div>
               <div></div>
             </div>
-            
+
             {topPlayers.map((player, index) => (
-              <div 
-                key={player.userId} 
-                style={{ 
-                  display: "grid", 
-                  gridTemplateColumns: "50px 1fr 80px 50px", 
-                  gap: "10px", 
-                  alignItems: "center",
-                  padding: "12px 20px",
-                  backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white",
-                  borderRadius: "4px"
-                }}
-              >
+              <div key={player.userId} style={{ display: "grid", gridTemplateColumns: "50px 1fr 80px 50px", gap: "10px", alignItems: "center", padding: "12px 20px", backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white", borderRadius: "4px" }}>
                 <div style={{ fontWeight: "bold", color: index < 3 ? "#FF6384" : "#666" }}>
                   {index + 1}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   {player.photoURL ? (
-                    <img 
-                      src={player.photoURL} 
-                      alt={player.name} 
-                      style={{ 
-                        width: "32px", 
-                        height: "32px", 
-                        borderRadius: "50%",
-                        objectFit: "cover"
-                      }} 
-                    />
+                    <img src={player.photoURL} alt={player.name} style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }} />
                   ) : (
-                    <div style={{
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      backgroundColor: "#eee",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#999"
-                    }}>
+                    <div style={{ width: "32px", height: "32px", borderRadius: "50%", backgroundColor: "#eee", display: "flex", alignItems: "center", justifyContent: "center", color: "#999" }}>
                       {player.name.charAt(0).toUpperCase()}
                     </div>
                   )}
