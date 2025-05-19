@@ -9,19 +9,19 @@ import { getFirestore, doc, getDoc } from "firebase/firestore";
 // Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+// Define facility map as a constant outside the component
+const FACILITY_MAP = Object.freeze({
+  1: { name: "Padel", emoji: "🎾" },
+  2: { name: "Soccer", emoji: "⚽" },
+  3: { name: "Tennis", emoji: "🎾" }
+});
+
 export default function TopPlayersReport({ sportId }) {
   const [topPlayers, setTopPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sportName, setSportName] = useState("");
   const [error, setError] = useState(null);
   const chartRef = useRef();
-
-  // Map facility IDs to sport names
-  const facilityMap = {
-    1: { name: "Padel", emoji: "🎾" },
-    2: { name: "Soccer", emoji: "⚽" },
-    3: { name: "Tennis", emoji: "🎾" }
-  };
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,8 +30,8 @@ export default function TopPlayersReport({ sportId }) {
     async function fetchData() {
       try {
         // Set sport name
-        if (facilityMap[sportId]) {
-          setSportName(`${facilityMap[sportId].emoji} ${facilityMap[sportId].name}`);
+        if (FACILITY_MAP[sportId]) {
+          setSportName(`${FACILITY_MAP[sportId].emoji} ${FACILITY_MAP[sportId].name}`);
         }
 
         // Fetch all bookings
@@ -39,9 +39,9 @@ export default function TopPlayersReport({ sportId }) {
         if (!resp.ok) throw new Error('Failed to fetch bookings');
         const bookings = await resp.json();
 
-        // Filter and group bookings by user
+        // Filter and group bookings by user with strict equality
         const userBookings = bookings.reduce((acc, booking) => {
-          if (booking.facility_id === sportId) {
+          if (Number(booking.facility_id) === Number(sportId)) {
             acc[booking.uid] = (acc[booking.user_id] || 0) + 1;
           }
           return acc;
@@ -63,7 +63,9 @@ export default function TopPlayersReport({ sportId }) {
                 if (authUser) {
                   return {
                     ...player,
-                    name: authUser.displayName || undefined,
+                    name: authUser.displayName || 
+                         authUser.email?.split('@')[0] || 
+                         `Player ${player.userId.slice(0, 4)}`,
                     photoURL: authUser.photoURL || null
                   };
                 }
@@ -112,8 +114,9 @@ export default function TopPlayersReport({ sportId }) {
     }
 
     fetchData();
-  }, [sportId]);
+  }, [sportId]); // FACILITY_MAP is now a constant outside the component
 
+  // ... rest of your component remains exactly the same
   // Prepare data for the chart
   const chartData = {
     labels: topPlayers.map(player => player.name),
