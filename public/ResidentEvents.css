@@ -1,0 +1,143 @@
+/* Background for the entire page */
+.resident-events-page {
+  background: radial-gradient(circle at bottom left, #166d6d, black);
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+}
+
+/* Container for the resident events content */
+.resident-events-container {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding-top: 0; 
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Header styles (reused from AdminDash format) */
+.resident-header {
+  background-color:  rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 40px 20px 60px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 2px 8px #166d6d; 
+}
+
+
+
+.resident-title {
+  font-size: 48px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px #166d6d;
+}
+
+ .resident-username {
+  font-size: 36px;
+  font-weight: normal;
+  margin: 10px 0;
+  text-shadow: 1px 1px 3px #166d6d;
+}
+
+ .resident-subtitle {
+  font-size: 20px;
+  margin-top: 10px;
+  text-shadow: 1px 1px 3px #166d6d;
+}
+
+/* Profile image stays top-right */
+.resident-profile {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+.resident-header img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.resident-header hgroup h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.resident-header hgroup h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: #cccccc;
+}
+
+/* Page title */
+.events-header {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Each event card */
+.event-card {
+  background-color: rgba(22, 109, 109, 0.2);
+  border: 1px solid #166d6d;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top:2rem ;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 2px 2px 10px #ffffff;
+}
+
+.event-card h2 {
+  margin-top: 0;
+  color: #00ffff;
+}
+
+.event-card p {
+  margin: 0.4rem 0;
+}
+
+/* Join button */
+.event-card button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #166d6d;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+.event-card button:hover {
+  background-color: #000000;
+}
+
+/* Fallback message */
+.resident-events-container p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #dddddd;
+}
