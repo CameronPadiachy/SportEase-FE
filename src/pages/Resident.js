@@ -4,6 +4,7 @@ import { auth } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 
 import FacilityStats from './facilityStats';
+import TopPlayersReport from './TopPlayerReport';
 
 export default function Resident() {
   const [userInfo, setUserInfo] = useState({ name: 'Loading...', photo: '' });
@@ -156,6 +157,12 @@ export default function Resident() {
 
       <section id="facilitytrends" className="facility-trend-section">
         <FacilityStats />
+      </section>
+
+      < section id="TopUser" className='Top-user-section'>
+        <TopPlayersReport sportId={1} />  
+        <TopPlayersReport sportId={2} />  
+        <TopPlayersReport sportId={3} />  
       </section>
 
       <footer className="footer-bar">
