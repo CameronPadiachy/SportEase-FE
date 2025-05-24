@@ -1,12 +1,21 @@
-.staff-reports-main {
+html, body {
+  height: 100%;
+  margin: 0;
   background-color: #000000;
-  padding-top: 40px;
+}
+
+.resident-reports-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #000000;
   font-family: Arial, sans-serif;
   max-width: 100%;
   margin: auto;
+  padding-top: 40px;
 }
 
-.staff-reports-title {
+.resident-reports-title {
   font-size: 48px;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px #2a6f99;
@@ -23,10 +32,11 @@
   color: #ffffff;
   list-style: none;
   padding: 0;
+  flex-grow: 1;
 }
 
 .report-card {
-  margin-bottom: 30px;
+  margin: 20px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px #2a6f99;
@@ -38,16 +48,12 @@
   font-weight: bold;
   text-transform: capitalize;
 }
-
-/* ✅ Dynamic Status Styling */
 .status-text.submitted {
   color: red;
 }
-
 .status-text.in-progress {
   color: orange;
 }
-
 .status-text.resolved {
   color: green;
 }
@@ -107,22 +113,28 @@
   font-family: Arial;
 }
 
-.staff-reports-main footer {
+.resident-reports-main footer {
   background-color: rgba(35, 31, 31, 0.1);
   backdrop-filter: blur(8px);
   color: white;
   text-align: center;
   padding: 20px;
   font-size: 14px;
-  position: relative;
-  bottom: 0;
   width: 100%;
-  height: fit-content;
+  margin-top: auto;
 }
 
+/* Icon color tint */
+.icon-blue {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 5px;
+  filter: brightness(0) saturate(100%) invert(43%) sepia(100%) saturate(355%) hue-rotate(169deg) brightness(97%) contrast(92%);
+}
 
 @media (max-width: 768px) {
-  .staff-reports-title {
+  .resident-reports-title {
     font-size: 32px;
     padding: 0 10px;
   }

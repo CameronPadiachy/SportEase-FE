@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
+import './ResidentReports.css';
 
 export default function ResidentReports() {
   const [reports, setReports] = useState([]);
@@ -43,44 +44,28 @@ export default function ResidentReports() {
     }
   }
 
-  function getStatusColor(status) {
-    if (status === "submitted") return "red";
-    if (status === "in progress") return "orange";
-    if (status === "resolved") return "green";
-    return "black";
+  function getStatusClass(status) {
+    return `status-text ${status.replace(" ", "-")}`;
   }
 
   return (
-    <main style={{ padding: "40px", fontFamily: "Arial, sans-serif", maxWidth: "900px", margin: "auto" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>🛠️ Submit & View Maintenance Issues</h1>
+    <main className="resident-reports-main">
+      <h1 className="resident-reports-title">
+        <img src="/icons/maintanence.png" alt="" className="icon-blue" />
+        Submit & View Maintenance Issues
+      </h1>
 
       <section style={{ textAlign: "center", marginBottom: "30px" }}>
         <button
           onClick={() => setShowForm(!showForm)}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: showForm ? "#ccc" : "#007bff",
-            color: showForm ? "#000" : "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
-          }}
+          className="btn-status"
         >
           {showForm ? "Cancel" : "Add New Report"}
         </button>
       </section>
 
       {showForm && (
-        <form
-          onSubmit={handleAddReport}
-          style={{
-            marginBottom: "40px",
-            padding: "20px",
-            backgroundColor: "#f9f9f9",
-            borderRadius: "8px",
-            boxShadow: "0 0 8px rgba(0,0,0,0.1)"
-          }}
-        >
+        <form onSubmit={handleAddReport} className="report-card">
           <section style={{ marginBottom: "15px" }}>
             <label><strong>Your Name:</strong></label>
             <br />
@@ -89,13 +74,8 @@ export default function ResidentReports() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                marginTop: "5px"
-              }}
+              className="feedback-input"
+              style={{ height: "auto" }}
             />
           </section>
 
@@ -106,66 +86,40 @@ export default function ResidentReports() {
               required
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              style={{
-                width: "100%",
-                height: "100px",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                marginTop: "5px"
-              }}
+              className="feedback-input"
             />
           </section>
 
           <br />
-          <button
-            type="submit"
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#28a745",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer"
-            }}
-          >
-            Submit Report
-          </button>
+          <button type="submit" className="btn-feedback">Submit Report</button>
         </form>
       )}
 
       <section>
         {reports.length === 0 ? (
-          <p style={{ textAlign: "center" }}>No reports yet.</p>
+          <p className="no-reports">No reports yet.</p>
         ) : (
-          <ul style={{ listStyle: "none", padding: 0 }}>
+          <ul className="report-list">
             {reports.map((report) => (
-              <li
-                key={report.id}
-                style={{
-                  marginBottom: "30px",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-                  backgroundColor: "#ffffff"
-                }}
-              >
-                <p><strong>👤 Name:</strong> {report.createdBy}</p>
-                <p><strong>📄 Issue:</strong> {report.reportMessage}</p>
-                <p><strong>📅 Date:</strong> {report.createdAt?.toDate().toLocaleString()}</p>
+              <li key={report.id} className="report-card">
                 <p>
-                  <strong>📌 Status:</strong>{" "}
-                  <span style={{
-                    fontWeight: "bold",
-                    color: getStatusColor(report.status),
-                    textTransform: "capitalize"
-                  }}>
+                  <strong><img src="/icons/person.png" alt="" className="icon-blue" /> Name:</strong> {report.createdBy}
+                </p>
+                <p>
+                  <strong><img src="/icons/report.png" alt="" className="icon-blue" /> Issue:</strong> {report.reportMessage}
+                </p>
+                <p>
+                  <strong><img src="/icons/calendar.png" alt="" className="icon-blue" /> Date:</strong> {report.createdAt?.toDate().toLocaleString()}
+                </p>
+                <p>
+                  <strong><img src="/icons/arrow.png" alt="" className="icon-blue" /> Status:</strong>{" "}
+                  <span className={getStatusClass(report.status)}>
                     {report.status}
                   </span>
                 </p>
                 {report.feedback && (
-                  <p style={{ backgroundColor: "#e7f3ff", padding: "10px", borderRadius: "5px", marginTop: "10px" }}>
-                    <strong>💬 Staff Feedback:</strong> {report.feedback}
+                  <p className="feedback-box">
+                    <strong><img src="/icons/feedback.png" alt="" className="icon-blue" /> Staff Feedback:</strong> {report.feedback}
                   </p>
                 )}
               </li>
@@ -173,6 +127,10 @@ export default function ResidentReports() {
           </ul>
         )}
       </section>
+
+      <footer>
+        <p>&copy; 2025 SportEase. All rights reserved.</p>
+      </footer>
     </main>
   );
 }
