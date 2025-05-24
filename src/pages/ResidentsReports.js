@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
-import './ResidentReports.css';
 
 export default function ResidentReports() {
   const [reports, setReports] = useState([]);
