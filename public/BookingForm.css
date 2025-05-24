@@ -1,0 +1,92 @@
+/* Gradient background, bottom-left origin */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.booking-main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at bottom left, #166d6d, #000000 80%);
+  color: #ffffff;
+}
+
+.booking-form {
+  background-color: rgba(255, 255, 255, 0.279);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgb(22, 109, 109);
+  padding: 30px 40px;
+  max-width: 400px;
+  width: 100%;
+  color: #333333;
+}
+
+fieldset {
+  border: none;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+input[type="date"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+legend {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+button[type="button"] {
+  padding: 10px 16px;
+  border: 1px solid #166d6d;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #166d6d;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+button[type="button"].active {
+  background-color: #166d6d;
+  color: #ffffff;
+}
+
+button[type="button"]:hover {
+  background-color: #166d6d;
+  color: #ffffff;
+}
+
+.submit-btn {
+  background-color: #166d6d;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #000000ce;
+}
