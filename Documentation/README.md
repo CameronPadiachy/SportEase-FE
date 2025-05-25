@@ -1,6 +1,6 @@
 This folder contains the documentation for each sprint.
 
-Each sprint document can be downloaded from this folder or accessed as a Google Doc from the links below:
+Each document can be downloaded from this folder or accessed as a Google Doc from the links below:
 
 Sprint 1: https://docs.google.com/document/d/1mvp-hV9PfgJ4TOxwksSQg_DQS4KUtOfL/edit?usp=sharing&ouid=102692226503091336743&rtpof=true&sd=true
 
