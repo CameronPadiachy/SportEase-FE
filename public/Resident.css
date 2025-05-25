@@ -295,8 +295,8 @@
   margin-top: 20px;
   border-radius: 8px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content:flex-start;
   box-shadow: 3px 4px  rgba(22, 109, 109, 0.664);
   backdrop-filter: blur(10px);
 }
@@ -305,7 +305,10 @@
   font-size: 18px;
   font-weight: normal;
   color: #ffffffe5;
-
+  padding: 15px 15px;
+  background-color: #31939397;
+  border-radius: 20px;
+  margin-top: 12px;
 }
 
 .resident-container footer.footer-bar {
