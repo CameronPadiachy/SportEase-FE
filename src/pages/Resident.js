@@ -84,6 +84,26 @@ export default function Resident() {
     navigate('/resident-events');
   };
 
+  //  Utility: Format booking times in messages to local time
+  const formatBookingTime = (message) => {
+    const timeRegex = /from (\d{2}:\d{2}) to (\d{2}:\d{2})/;
+    const match = message.match(timeRegex);
+    if (!match) return message;
+
+    const [, from, to] = match;
+    const today = new Date().toISOString().split('T')[0]; // e.g., 2025-05-24
+
+    // Parse UTC times
+    const fromDate = new Date(`${today}T${from}:00Z`);
+    const toDate = new Date(`${today}T${to}:00Z`);
+
+    // Convert to local time
+    const localFrom = fromDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const localTo = toDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    return message.replace(timeRegex, `from ${localFrom} to ${localTo}`);
+  };
+
   return (
     <main className="resident-container">
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
@@ -110,20 +130,22 @@ export default function Resident() {
             <li><a href="#announcements">Announcements</a></li>
             <li><a href="#notifications">Notifications</a></li>
             <li><a href="#facilitytrends">Trends</a></li>
+            <li onClick={navigateToEvents}>Join Events</li>
+            <li onClick={navigateToReports}>Reports</li>
           </ul>
         </nav>
       </header>
 
       <section className="resident-booking-section" id="bookings">
-        <article className="resident-column" onClick={() => goToFacility(2)}>
+        <article className="resident-column" onClick={() => goToFacility(1)}>
           <img className="resident-image" src="/images/padel.jpeg" alt="Padel" />
           <p className="hover-description">Get your paddle on! Book now and enjoy a fun match with friends!</p>
         </article>
-        <article className="resident-column" onClick={() => goToFacility(3)}>
+        <article className="resident-column" onClick={() => goToFacility(2)}>
           <img className="resident-image" src="/images/soccer.jpeg" alt="Soccer" />
           <p className="hover-description">Goal time! Book your soccer field and get ready to score!</p>
         </article>
-        <article className="resident-column" onClick={() => goToFacility(1)}>
+        <article className="resident-column" onClick={() => goToFacility(3)}>
           <img className="resident-image" src="/images/racket.jpeg" alt="Tennis" />
           <p className="hover-description">Serve it up! Book your tennis court and smash the competition!</p>
         </article>
@@ -134,7 +156,7 @@ export default function Resident() {
         <section className="announcement-block">
           {announcements.length > 0 ? (
             announcements.map((msg, idx) => (
-              <p key={idx}>{msg.message}</p>
+              <p key={idx}>{formatBookingTime(msg.message)}</p>
             ))
           ) : (
             <p>No announcements yet! Stay tuned.</p>
@@ -147,7 +169,7 @@ export default function Resident() {
         <section className="notification-block">
           {notifications.length > 0 ? (
             notifications.map((msg, idx) => (
-              <p key={idx}>{msg.message}</p>
+              <p key={idx}>{formatBookingTime(msg.message)}</p>
             ))
           ) : (
             <p>No notifications yet! Stay tuned.</p>
@@ -159,7 +181,7 @@ export default function Resident() {
         <FacilityStats />
       </section>
 
-      < section id="TopUser" className='Top-user-section'>
+      <section id="TopUser" className='Top-user-section'>
         <TopPlayersReport sportId={1} />  
         <TopPlayersReport sportId={2} />  
         <TopPlayersReport sportId={3} />  

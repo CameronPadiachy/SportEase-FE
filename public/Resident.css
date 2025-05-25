@@ -141,7 +141,12 @@
 .resident-tabs li {
  display: table-cell;
  position: relative;
- padding: 15px 0;
+ padding: 15px 20px;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15rem;
+  cursor: pointer;
 }
 
 .resident-tabs a {
@@ -150,7 +155,6 @@
   text-decoration: none;
   letter-spacing: 0.15rem;
   display: inline-block;
-  padding: 15px 20px;
   position: relative;
 }
 
@@ -158,12 +162,20 @@
   color: #166d6d;
 }
 
+.resident-tabs li:hover{
+  color: #166d6d;
+}
 .resident-tabs a:hover:after {
   width: 100%;
   left:0;
   background-color: #166d6d;
 }
 
+.resident-tabs li:hover:after {
+  width: 100%;
+  left:0;
+  background-color: #166d6d;
+}
 
 /* User Info Section */
 .resident-user-info {
@@ -347,49 +359,157 @@ footer.footer-bar li {
   text-shadow: 1px 2px 3px #166d6d;
 }
 
-/* Mobile tweaks */
+/* Additional mobile-friendly tweaks for smaller screens */
 @media (max-width: 768px) {
-  .resident-booking-section {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .resident-profile {
-    width: 60px;
-    height: 60px;
-    top: 15px;
-    right: 15px;
-  }
-
-  .resident-image {
-    width: 100px;
-    height: 100px;
-  }
-
-  .resident-button {
-    width: 90%;
-    font-size: 14px;
+   .resident-header {
+    text-align: center;
+    padding: 15px 10px 20px;
   }
 
   .resident-title {
+    font-size: 24px;
+    margin: 5px 0;
+  }
+
+  .resident-username {
+    font-size: 16px;
+    padding: 0;
+    margin: 5px 0;
+  }
+
+  .resident-profile {
+    width: 50px;
+    height: 50px;
+    top: 10px;
+    right: 10px;
+  }
+
+  /* General container */
+  .resident-container {
+    padding: 10px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 200px;
+    padding-top: 40px;
+  }
+
+  .sidebar .close-btn {
+    top: 15px;
+    right: 15px;
     font-size: 28px;
+  }
+
+  .sidebar li {
+    padding: 12px;
+  }
+
+  .sidebar .logout-btn {
+    padding: 12px;
+  }
+
+  /* Header adjustments */
+  .resident-header {
+    padding: 15px 10px 20px;
+  }
+
+  .resident-profile {
+    width: 50px;
+    height: 50px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .resident-title {
+    font-size: 26px;
   }
 
   .resident-username {
     font-size: 18px;
+    padding-top: 40px;
+    padding-left: 20px;
   }
 
   .sidebar-toggle {
-    font-size: 40px;
+    font-size: 26px;
+    top: 15px;
+    left: 15px;
   }
 
+  /* Tabs adjustments */
+  .resident-tabs ul {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .resident-tabs li {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  /* Booking section */
+  .resident-booking-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .resident-image {
+    width: 200px;
+    height: 200px;
+    margin-top: 100px;
+  }
+
+  .resident-column .hover-description {
+    font-size: 16px;
+  }
+
+  /* Announcements & Notifications */
+  .resident-announcements-section,
+  .resident-notifications-section {
+    margin-top: 100px;
+    padding: 20px 10px;
+  }
+
+  .resident-announcements-section h2,
+  .resident-notifications-section h2 {
+    font-size: 28px;
+  }
+
+  .resident-announcements-section .announcement-block,
+  .resident-notifications-section .notification-block {
+    padding: 15px;
+    height: auto;
+  }
+
+  .resident-notifications-section .notification-block {
+    height: 300px;
+  }
+
+  /* Footer */
   .resident-container footer.footer-bar {
     flex-direction: column;
     text-align: center;
   }
 
+  footer.footer-bar section {
+    margin-bottom: 10px;
+  }
+
   footer.footer-bar .footer-right {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
+  }
+
+  /* Facility trend section */
+  .facility-trend-section {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .trend-title {
+    font-size: 26px;
   }
 }
