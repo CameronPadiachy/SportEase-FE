@@ -9,6 +9,9 @@ Clone repo (preferably using VS code )
 open terminal in VS and run the command "npm start" 
 you might be prompted to install things using the terminal 
 
-There are specific google accounts with admin , staff and resident accessability , Please check documentation for those accounts to access the different roles
+There are specific google accounts with admin , staff and resident accessability 
+ Please check documentation for those accounts to access the different roles
+
+
 when registering a new account (logging in for the first time) the role of that new account is automatically set to "resident" until promoted
 
